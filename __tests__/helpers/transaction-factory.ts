@@ -6,6 +6,7 @@ import {
 } from "@arkecosystem/core-magistrate-crypto";
 import { Identities, Interfaces, Managers, Transactions, Types, Utils } from "@arkecosystem/crypto";
 import { secrets } from "../utils/config/testnet/delegates.json";
+import testnet from "../utils/config/testnet/testnet.json";
 
 const defaultPassphrase: string = secrets[0];
 
@@ -177,6 +178,7 @@ export class TransactionFactory {
     private version: number;
     private senderPublicKey: string;
     private expiration: number;
+    private networkConfig: Interfaces.INetworkConfig = testnet;
 
     public constructor(builder) {
         this.builder = builder;
@@ -196,6 +198,12 @@ export class TransactionFactory {
 
     public withNetwork(network: Types.NetworkName): TransactionFactory {
         this.network = network;
+
+        return this;
+    }
+
+    public withNetworkConfig(networkConfig: Interfaces.INetworkConfig): TransactionFactory {
+        this.networkConfig = networkConfig;
 
         return this;
     }
@@ -295,7 +303,11 @@ export class TransactionFactory {
     }
 
     private sign<T>(quantity: number, method: string): T[] {
-        Managers.configManager.setFromPreset(this.network);
+        if (this.networkConfig) {
+            Managers.configManager.setConfig(this.networkConfig);
+        } else {
+            Managers.configManager.setFromPreset(this.network);
+        }
 
         if (!this.senderPublicKey) {
             this.senderPublicKey = Identities.PublicKey.fromPassphrase(this.passphrase);

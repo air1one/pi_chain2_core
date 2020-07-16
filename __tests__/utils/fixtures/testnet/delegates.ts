@@ -1,9 +1,10 @@
 import { Identities, Managers, Utils } from "@arkecosystem/crypto";
 
-Managers.configManager.setFromPreset("testnet");
-
 import { secrets } from "../../config/testnet/delegates.json";
 import { genesisBlock } from "../../config/testnet/genesisBlock";
+import testnet from "../../config/testnet/testnet.json";
+
+Managers.configManager.setConfig(testnet);
 
 export const delegates: Array<{
     secret: string;
