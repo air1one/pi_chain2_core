@@ -16,6 +16,7 @@ import { TransactionFactory, Utils as TransactionUtils, Verifier } from "../../.
 import { BuilderFactory } from "../../../../packages/crypto/src/transactions/builders";
 import { Deserializer } from "../../../../packages/crypto/src/transactions/deserializer";
 import { Serializer } from "../../../../packages/crypto/src/transactions/serializer";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { htlcSecretHashHex, htlcSecretHex } from "../../../utils/fixtures";
 import { legacyMultiSignatureRegistration } from "./__fixtures__/transaction";
 
@@ -163,7 +164,7 @@ describe("Transaction serializer / Deserializer", () => {
         let multiSignatureRegistration;
 
         beforeEach(() => {
-            configManager.setFromPreset("testnet");
+            configManager.setConfig(testnet);
 
             const participant1 = Keys.fromPassphrase("secret 1");
             const participant2 = Keys.fromPassphrase("secret 2");
@@ -223,7 +224,7 @@ describe("Transaction serializer / Deserializer", () => {
         ];
 
         beforeAll(() => {
-            configManager.setFromPreset("testnet");
+            configManager.setConfig(testnet);
         });
 
         beforeEach(() => {
@@ -284,7 +285,7 @@ describe("Transaction serializer / Deserializer", () => {
 
     describe("ser/deserialize - multi payment", () => {
         beforeAll(() => {
-            configManager.setFromPreset("testnet");
+            configManager.setConfig(testnet);
         });
 
         it("should ser/deserialize giving back original fields", () => {
@@ -358,7 +359,7 @@ describe("Transaction serializer / Deserializer", () => {
         };
 
         beforeAll(() => {
-            configManager.setFromPreset("testnet");
+            configManager.setConfig(testnet);
         });
 
         it("should ser/deserialize giving back original fields", () => {
@@ -412,7 +413,7 @@ describe("Transaction serializer / Deserializer", () => {
         };
 
         beforeAll(() => {
-            configManager.setFromPreset("testnet");
+            configManager.setConfig(testnet);
         });
 
         it("should ser/deserialize giving back original fields", () => {
@@ -452,7 +453,7 @@ describe("Transaction serializer / Deserializer", () => {
         };
 
         beforeAll(() => {
-            configManager.setFromPreset("testnet");
+            configManager.setConfig(testnet);
         });
 
         it("should ser/deserialize giving back original fields", () => {
@@ -488,7 +489,7 @@ describe("Transaction serializer / Deserializer", () => {
 
     describe("deserialize - others", () => {
         beforeAll(() => {
-            configManager.setFromPreset("testnet");
+            configManager.setConfig(testnet);
         });
 
         it("should throw if type is not supported", () => {

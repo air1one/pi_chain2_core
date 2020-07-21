@@ -1,6 +1,7 @@
-import { Interfaces, Managers } from '@arkecosystem/crypto/';
+import { Interfaces, Managers } from "@arkecosystem/crypto/";
 import "../../../../packages/core-jest-matchers/src/transactions/valid-second-signature";
-import { TransactionFactory } from '../../../helpers/transaction-factory';
+import { TransactionFactory } from "../../../helpers/transaction-factory";
+import { testnet } from "../../../utils/config/testnet/testnet";
 
 const wallets = [
     {
@@ -19,10 +20,9 @@ describe(".toHaveValidSecondSignature", () => {
     let transaction: Interfaces.ITransactionData;
 
     beforeAll(() => {
-        Managers.configManager.setFromPreset("testnet");
+        Managers.configManager.setConfig(testnet);
 
-        transaction = TransactionFactory
-            .transfer("AaWAUV5hgDdUnpWHkD1a65AFQBayGgTaFF")
+        transaction = TransactionFactory.transfer("AaWAUV5hgDdUnpWHkD1a65AFQBayGgTaFF")
             .withVersion(2)
             .withPassphrase("poet virtual attend winter mushroom near manual dish exact palm siren motion")
             .withSecondPassphrase("obtain flower vital stone song express combine issue used excite despair trash")

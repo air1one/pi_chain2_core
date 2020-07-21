@@ -17,6 +17,7 @@ import {
     BusinessRegistrationTransactionHandler,
 } from "../../../../packages/core-magistrate-transactions/src/handlers";
 import { businessIndexer, MagistrateIndex } from "../../../../packages/core-magistrate-transactions/src/wallet-manager";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import {
     bridgechainRegistrationAsset1,
     bridgechainRegistrationAsset2,
@@ -55,7 +56,7 @@ let walletManager: State.IWalletManager;
 Managers.configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
 
 describe("Bridgechain update handler", () => {
-    Managers.configManager.setFromPreset("testnet");
+    Managers.configManager.setConfig(testnet);
 
     Handlers.Registry.registerTransactionHandler(BusinessRegistrationTransactionHandler);
     Handlers.Registry.registerTransactionHandler(BridgechainRegistrationTransactionHandler);

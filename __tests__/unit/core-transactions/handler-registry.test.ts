@@ -8,7 +8,7 @@ import { TransactionHandlerConstructor } from "../../../packages/core-transactio
 import { TransferTransactionHandler } from "../../../packages/core-transactions/src/handlers/transfer";
 
 import { DeactivatedTransactionHandlerError } from "../../../packages/core-transactions/src/errors";
-import { testnet } from "../../../packages/crypto/src/networks";
+import { testnet } from "../../utils/config/testnet/testnet";
 
 const { transactionBaseSchema, extend } = Transactions.schemas;
 const { TransactionType } = Enums;
@@ -97,7 +97,7 @@ class TestTransactionHandler extends TransactionHandler {
         data: Interfaces.ITransactionData,
         pool: TransactionPool.IConnection,
         processor: TransactionPool.IProcessor,
-    ): Promise<{ type: string, message: string } | null> {
+    ): Promise<{ type: string; message: string } | null> {
         return null;
     }
 

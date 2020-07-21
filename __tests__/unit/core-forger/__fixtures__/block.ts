@@ -1,7 +1,8 @@
 import { Utils } from "@arkecosystem/crypto";
 import { Blocks, Managers } from "@arkecosystem/crypto";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 
-Managers.configManager.setFromPreset("unitnet");
+Managers.configManager.setConfig(unitnet);
 
 export const sampleBlock = Blocks.BlockFactory.fromData({
     id: "4398082439836560423",

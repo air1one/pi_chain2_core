@@ -4,6 +4,7 @@ import { Hash } from "../../../../packages/crypto/src/crypto";
 import { configManager } from "../../../../packages/crypto/src/managers";
 import { Utils as TransactionUtils } from "../../../../packages/crypto/src/transactions";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { identity } from "../../../utils/identities";
 
 const transaction = TransactionFactory.transfer("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000)
@@ -13,7 +14,7 @@ const transaction = TransactionFactory.transfer("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZ
     .createOne();
 
 beforeEach(() => {
-    configManager.setFromPreset("testnet");
+    configManager.setConfig(testnet);
     configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
 });
 

@@ -1,13 +1,14 @@
 import { transformerService } from "../../../../packages/core-api/src/services/transformer";
 import { Managers, Transactions } from "../../../../packages/crypto/src";
 import { genesisBlock } from "../../../utils/config/testnet/genesisBlock";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { setUp, tearDown } from "../__support__/setup";
 import blockRaw from "./block-raw.json";
 import blockTransformed from "./block-transformed.json";
 import transactionRaw from "./transaction-raw.json";
 import transactionTransformed from "./transaction-transformed.json";
 
-Managers.configManager.setFromPreset("testnet");
+Managers.configManager.setConfig(testnet);
 Managers.configManager.getMilestone().aip11 = false;
 const genesisTransaction = Transactions.TransactionFactory.fromData(genesisBlock.transactions[0]);
 delete genesisBlock.transactions;

@@ -2,7 +2,7 @@ import "jest-extended";
 
 import { Slots } from "../../../../packages/crypto/src/crypto/slots";
 import { configManager } from "../../../../packages/crypto/src/managers/config";
-import { devnet } from "../../../../packages/crypto/src/networks";
+import { devnet } from "../../../utils/config/devnet/devnet";
 
 beforeEach(() => configManager.setConfig(devnet));
 

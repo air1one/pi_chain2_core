@@ -1,12 +1,13 @@
 import { Managers } from "@arkecosystem/crypto";
 import { EventEmitter } from "../../../../packages/core-event-emitter/src/emitter";
 import * as plugins from "../../../utils/config/testnet/plugins.js";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 import { blocks2to100 } from "../../../utils/fixtures";
 import { delegates } from "../../../utils/fixtures/testnet/delegates";
 import { genesisBlock } from "../../../utils/fixtures/unitnet/block-model";
 import { defaults } from "./p2p-options";
 
-Managers.configManager.setFromPreset("unitnet");
+Managers.configManager.setConfig(unitnet);
 
 export const eventEmitter = new EventEmitter();
 

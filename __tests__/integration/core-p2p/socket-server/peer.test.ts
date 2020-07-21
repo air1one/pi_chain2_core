@@ -13,9 +13,10 @@ import { startSocketServer } from "../../../../packages/core-p2p/src/socket-serv
 import { BlockFactory } from "../../../helpers";
 import { createPeerService } from "../../../helpers/peers";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 import { wallets } from "../../../utils/fixtures/unitnet/wallets";
 
-Managers.configManager.setFromPreset("unitnet");
+Managers.configManager.setConfig(unitnet);
 
 let server: SocketCluster;
 let socket;

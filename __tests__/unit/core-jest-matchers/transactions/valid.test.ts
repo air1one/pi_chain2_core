@@ -1,14 +1,14 @@
 import { Interfaces, Managers } from "@arkecosystem/crypto";
 import "../../../../packages/core-jest-matchers/src/transactions/valid";
-import { TransactionFactory } from '../../../helpers/transaction-factory';
+import { TransactionFactory } from "../../../helpers/transaction-factory";
+import { testnet } from "../../../utils/config/testnet/testnet";
 
 let transaction: Interfaces.ITransactionData;
 
 beforeAll(() => {
-    Managers.configManager.setFromPreset("testnet");
+    Managers.configManager.setConfig(testnet);
 
-    transaction = TransactionFactory
-        .transfer("AaWAUV5hgDdUnpWHkD1a65AFQBayGgTaFF")
+    transaction = TransactionFactory.transfer("AaWAUV5hgDdUnpWHkD1a65AFQBayGgTaFF")
         .withVersion(2)
         .withPassphrase("poet virtual attend winter mushroom near manual dish exact palm siren motion")
         .createOne();

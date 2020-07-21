@@ -7,11 +7,12 @@ import { Keys } from "@arkecosystem/crypto/src/identities";
 import { BuilderFactory, Utils as TransactionUtils, Verifier } from "@arkecosystem/crypto/src/transactions";
 import { configManager } from "../../../../packages/crypto/src/managers";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { createRandomTx } from "./__support__";
 
 describe("Verifier", () => {
     beforeEach(() => {
-        configManager.setFromPreset("testnet");
+        configManager.setConfig(testnet);
         configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
     });
 

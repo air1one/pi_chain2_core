@@ -6,12 +6,14 @@ import { configManager } from "@arkecosystem/crypto/src/managers";
 import clonedeep from "lodash.clonedeep";
 import { Wallet } from "../../../../packages/core-state/src/wallets";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
+import { devnet } from "../../../utils/config/devnet/devnet";
+import { testnet } from "../../../utils/config/testnet/testnet";
 
 const { SATOSHI } = Constants;
 const { TransactionType } = Enums;
 
 describe("Models - Wallet", () => {
-    beforeEach(() => Managers.configManager.setFromPreset("devnet"));
+    beforeEach(() => Managers.configManager.setConfig(devnet));
 
     describe("toString", () => {
         // TODO implementation is right?
@@ -340,7 +342,7 @@ describe("Models - Wallet", () => {
 
         describe("when wallet has multisignature", () => {
             it("should return correct audit data for Transfer type", () => {
-                configManager.setFromPreset("testnet");
+                configManager.setConfig(testnet);
                 const transaction = TransactionFactory.transfer("D61xc3yoBQDitwjqUspMPx1ooET6r1XLt7")
                     .withNetwork("devnet")
                     .withPassphrase("super secret passphrase")
@@ -364,7 +366,7 @@ describe("Models - Wallet", () => {
                 const audit = testWallet.auditApply(transaction);
                 expect(audit).toEqual([{ Mutisignature: false }, { Transfer: true }]);
 
-                configManager.setFromPreset("devnet");
+                configManager.setConfig(devnet);
             });
         });
 

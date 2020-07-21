@@ -11,7 +11,9 @@ import {
 } from "../../../../packages/core-blockchain/src/processor/handlers";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
 import { fixtures } from "../../../utils";
+import { mainnet } from "../../../utils/config/mainnet/mainnet";
 import { genesisBlock } from "../../../utils/config/testnet/genesisBlock";
+import { testnet } from "../../../utils/config/testnet/testnet";
 
 const { BlockFactory } = Blocks;
 const { delegates } = fixtures;
@@ -48,9 +50,9 @@ describe("Block processor", () => {
             const exceptionBlock = BlockFactory.fromData(blockTemplate);
             exceptionBlock.data.id = "10370119864814436559";
 
-            Managers.configManager.setFromPreset("mainnet");
+            Managers.configManager.setConfig(mainnet);
             expect(await blockProcessor.getHandler(exceptionBlock)).toBeInstanceOf(ExceptionHandler);
-            Managers.configManager.setFromPreset("testnet");
+            Managers.configManager.setConfig(testnet);
         });
 
         it("should return VerificationFailedHandler if block failed verification", async () => {

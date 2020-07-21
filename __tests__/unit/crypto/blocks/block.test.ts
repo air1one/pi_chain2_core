@@ -8,14 +8,16 @@ import { Slots } from "../../../../packages/crypto/src/crypto";
 import { IBlock } from "../../../../packages/crypto/src/interfaces";
 import { configManager } from "../../../../packages/crypto/src/managers";
 import * as networks from "../../../../packages/crypto/src/networks";
-import { testnet } from "../../../../packages/crypto/src/networks";
 import { NetworkName } from "../../../../packages/crypto/src/types";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
+import { devnet } from "../../../utils/config/devnet/devnet";
+import { mainnet } from "../../../utils/config/mainnet/mainnet";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { dummyBlock, dummyBlock2 } from "../fixtures/block";
 
-const { outlookTable } = configManager.getPreset("mainnet").exceptions;
+const { outlookTable } = mainnet.exceptions;
 
-beforeEach(() => configManager.setFromPreset("devnet"));
+beforeEach(() => configManager.setConfig(devnet));
 
 describe("Block", () => {
     const data = {
@@ -581,7 +583,7 @@ describe("Block", () => {
     });
 
     it("should reorder correctly transactions in deserialization", () => {
-        configManager.setFromPreset("mainnet");
+        configManager.setConfig(mainnet);
 
         const issue = {
             version: 0,
@@ -638,7 +640,7 @@ describe("Block", () => {
         expect(block.data.id).toBe(issue.id);
         expect(block.transactions[0].id).toBe(issue.transactions[1].id);
 
-        configManager.setFromPreset("devnet");
+        configManager.setConfig(devnet);
     });
 
     describe("v1 fix", () => {

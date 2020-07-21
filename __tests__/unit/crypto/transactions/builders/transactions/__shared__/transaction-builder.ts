@@ -3,9 +3,10 @@ import { configManager } from "../../../../../../../packages/crypto/src/managers
 import { Signer } from "../../../../../../../packages/crypto/src/transactions";
 import { TransactionBuilder } from "../../../../../../../packages/crypto/src/transactions/builders/transactions/transaction";
 import * as Utils from "../../../../../../../packages/crypto/src/utils";
+import { testnet } from "../../../../../../utils/config/testnet/testnet";
 import { identity, identitySecond } from "../../../../../../utils/identities";
 
-configManager.setFromPreset("testnet");
+configManager.setConfig(testnet);
 configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
 
 export const transactionBuilder = <T extends TransactionBuilder<T>>(provider: () => TransactionBuilder<T>) => {

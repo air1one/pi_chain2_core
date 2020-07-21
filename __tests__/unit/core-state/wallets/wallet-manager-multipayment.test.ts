@@ -2,6 +2,7 @@
 import { State } from "@arkecosystem/core-interfaces";
 import { Identities, Managers, Transactions, Utils } from "@arkecosystem/crypto";
 import { Wallet, WalletManager } from "../../../../packages/core-state/src/wallets";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 
 jest.mock("@arkecosystem/core-container", () => {
     return {
@@ -23,7 +24,7 @@ jest.mock("@arkecosystem/core-container", () => {
 let walletManager: State.IWalletManager;
 
 beforeAll(() => {
-    Managers.configManager.setFromPreset("unitnet");
+    Managers.configManager.setConfig(unitnet);
 });
 
 describe("Wallet Manager", () => {

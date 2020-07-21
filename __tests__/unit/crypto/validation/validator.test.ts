@@ -7,6 +7,7 @@ import { TransactionTypeFactory } from "../../../../packages/crypto/src/transact
 import { TransactionSchema } from "../../../../packages/crypto/src/transactions/types/schemas";
 import { BigNumber } from "../../../../packages/crypto/src/utils";
 import { validator } from "../../../../packages/crypto/src/validation";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 import { block2, genesisBlock } from "../../../utils/fixtures/unitnet/blocks";
 
 describe("validator", () => {
@@ -255,7 +256,7 @@ describe("validator", () => {
         describe("block", () => {
             beforeAll(() => {
                 TransactionTypeFactory.get(0); // Make sure registry is loaded, since it adds the "transactions" schema.
-                configManager.setFromPreset("unitnet");
+                configManager.setConfig(unitnet);
             });
 
             it("should be ok", () => {

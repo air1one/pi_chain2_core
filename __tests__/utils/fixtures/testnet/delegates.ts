@@ -2,7 +2,7 @@ import { Identities, Managers, Utils } from "@arkecosystem/crypto";
 
 import { secrets } from "../../config/testnet/delegates.json";
 import { genesisBlock } from "../../config/testnet/genesisBlock";
-import testnet from "../../config/testnet/testnet.json";
+import { testnet } from "../../config/testnet/testnet";
 
 Managers.configManager.setConfig(testnet);
 

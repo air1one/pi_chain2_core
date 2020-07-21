@@ -16,6 +16,7 @@ import { businessIndexer, MagistrateIndex } from "@arkecosystem/core-magistrate-
 import { Wallets } from "@arkecosystem/core-state";
 import { Handlers } from "@arkecosystem/core-transactions";
 import { Identities, Managers, Utils } from "@arkecosystem/crypto";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { bridgechainRegistrationAsset1, businessRegistrationAsset1 } from "../helper";
 
 // Mock database with walletManager
@@ -56,7 +57,7 @@ const passphrase = "clay harbor enemy utility margin pretty hub comic piece aero
 
 describe("Business resignation handler", () => {
     // Manager configurations
-    Managers.configManager.setFromPreset("testnet");
+    Managers.configManager.setConfig(testnet);
     Managers.configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
 
     // Handlers registries

@@ -9,8 +9,9 @@ import SocketCluster from "socketcluster";
 import socketCluster from "socketcluster-client";
 import { startSocketServer } from "../../../../packages/core-p2p/src/socket-server";
 import { createPeerService } from "../../../helpers/peers";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 
-Managers.configManager.setFromPreset("unitnet");
+Managers.configManager.setConfig(unitnet);
 
 let server: SocketCluster;
 let socket;

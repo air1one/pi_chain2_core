@@ -6,7 +6,7 @@ import {
 } from "@arkecosystem/core-magistrate-crypto";
 import { Identities, Interfaces, Managers, Transactions, Types, Utils } from "@arkecosystem/crypto";
 import { secrets } from "../utils/config/testnet/delegates.json";
-import testnet from "../utils/config/testnet/testnet.json";
+import { testnet } from "../utils/config/testnet/testnet";
 
 const defaultPassphrase: string = secrets[0];
 

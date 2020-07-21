@@ -4,7 +4,7 @@ import { fromSeed } from "bip32";
 import { HDWallet } from "../../../../packages/crypto/src/crypto";
 import { Address } from "../../../../packages/crypto/src/identities";
 import { configManager } from "../../../../packages/crypto/src/managers/config";
-import { mainnet } from "../../../../packages/crypto/src/networks";
+import { mainnet } from "../../../utils/config/mainnet/mainnet";
 
 const mnemonic =
     "sorry hawk one science reject employ museum ride into post machine attack bar seminar myself unhappy faculty differ grain fish chest bird muffin mesh";

@@ -9,11 +9,15 @@ import { TransactionTypeFactory } from "../../../../packages/crypto/src/transact
 import { schemas } from "../../../../packages/crypto/src/transactions/types";
 import { TransactionSchema } from "../../../../packages/crypto/src/transactions/types/schemas";
 import { validator as Ajv } from "../../../../packages/crypto/src/validation";
+import { devnet } from "../../../utils/config/devnet/devnet";
+import { mainnet } from "../../../utils/config/mainnet/mainnet";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { htlcSecretHashHex, htlcSecretHex } from "../../../utils/fixtures";
 
 let transaction;
 let transactionSchema: TransactionSchema;
 
+configManager.setConfig(testnet);
 configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
 
 describe("Transfer Transaction", () => {
@@ -179,7 +183,7 @@ describe("Transfer Transaction", () => {
     });
 
     it("should be valid after a network change", () => {
-        configManager.setFromPreset("devnet");
+        configManager.setConfig(devnet);
 
         let transfer = transaction
             .recipientId(address)
@@ -194,7 +198,7 @@ describe("Transfer Transaction", () => {
         const { error } = Ajv.validate(transactionSchema.$id, transaction.getStruct());
         expect(error).toBeUndefined();
 
-        configManager.setFromPreset("mainnet");
+        configManager.setConfig(mainnet);
 
         transfer = transaction
             .recipientId("APnDzjtDb1FthuqcLMeL5XMWb1uD1KeMGi")
@@ -207,7 +211,7 @@ describe("Transfer Transaction", () => {
         expect(transfer.data.network).toBe(23);
         expect(Ajv.validate(transactionSchema.$id, transaction.getStruct()).error).toBeUndefined();
 
-        configManager.setFromPreset("devnet");
+        configManager.setConfig(devnet);
     });
 
     it("should be ok and turn uppercase publicKey to lowercase", () => {
@@ -507,7 +511,7 @@ describe("Multi Signature Registration Transaction", () => {
     });
 
     beforeEach(() => {
-        configManager.setFromPreset("testnet");
+        configManager.setConfig(testnet);
         transaction = BuilderFactory.multiSignature();
         multiSignatureAsset = {
             min: 3,
@@ -516,7 +520,7 @@ describe("Multi Signature Registration Transaction", () => {
     });
 
     afterEach(() => {
-        configManager.setFromPreset("devnet");
+        configManager.setConfig(devnet);
     });
 
     const signTransaction = (tx, values) => {
