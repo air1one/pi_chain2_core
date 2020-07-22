@@ -8,7 +8,9 @@ export class Config {
     private config: Record<string, any>;
 
     public async setUp(opts): Promise<Config> {
-        const network: Interfaces.INetworkConfig = this.configureNetwork(opts.network);
+        const network: Interfaces.INetworkConfig = opts.networkConfig
+            ? this.configureNetworkFromConfig(opts.networkConfig)
+            : this.configureNetwork(opts.network);
 
         this.config = await new FileLoader().setUp(network);
 
@@ -45,6 +47,10 @@ export class Config {
     private configureNetwork(network: Types.NetworkName): Interfaces.INetworkConfig {
         const config: Interfaces.INetworkConfig = Managers.NetworkManager.findByName(network);
 
+        return this.configureNetworkFromConfig(config);
+    }
+
+    private configureNetworkFromConfig(config: Interfaces.INetworkConfig): Interfaces.INetworkConfig {
         const { error } = Joi.validate(
             config,
             Joi.object({
