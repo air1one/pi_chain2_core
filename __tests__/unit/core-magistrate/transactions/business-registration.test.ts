@@ -3,6 +3,7 @@ import "jest-extended";
 import { Builders as MagistrateBuilders } from "@arkecosystem/core-magistrate-crypto";
 import { Transactions as MagistrateTransactions } from "@arkecosystem/core-magistrate-crypto";
 import { Managers, Transactions, Validation as Ajv } from "@arkecosystem/crypto";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import {
     businessRegistrationAsset1,
     businessRegistrationAsset2,
@@ -16,7 +17,7 @@ let builder: MagistrateBuilders.BusinessRegistrationBuilder;
 Managers.configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
 
 describe("Business registration transaction", () => {
-    Managers.configManager.setFromPreset("testnet");
+    Managers.configManager.setConfig(testnet);
     Transactions.TransactionRegistry.registerTransactionType(MagistrateTransactions.BusinessRegistrationTransaction);
 
     beforeEach(() => {

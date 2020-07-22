@@ -2,6 +2,8 @@ import "jest-extended";
 
 import { Managers, Utils, Validation } from "../../../../packages/crypto";
 import { TransactionType } from "../../../../packages/crypto/src/enums";
+import { devnet } from "../../../utils/config/devnet/devnet";
+import { mainnet } from "../../../utils/config/mainnet/mainnet";
 
 const ajv = Validation.validator.getInstance();
 
@@ -29,12 +31,12 @@ describe("keyword network", () => {
         expect(validate(23)).toBeFalse();
         expect(validate("a")).toBeFalse();
 
-        Managers.configManager.setFromPreset("mainnet");
+        Managers.configManager.setConfig(mainnet);
 
         expect(validate(23)).toBeTrue();
         expect(validate(30)).toBeFalse();
 
-        Managers.configManager.setFromPreset("devnet");
+        Managers.configManager.setConfig(devnet);
 
         expect(validate(30)).toBeTrue();
         expect(validate(23)).toBeFalse();

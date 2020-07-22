@@ -6,12 +6,15 @@ import { configManager } from "@arkecosystem/crypto/src/managers";
 import clonedeep from "lodash.clonedeep";
 import { Wallet } from "../../../../packages/core-state/src/wallets";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
+import { devnet } from "../../../utils/config/devnet/devnet";
+import { testnet } from "../../../utils/config/testnet/testnet";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 
 const { SATOSHI } = Constants;
 const { TransactionType } = Enums;
 
 describe("Models - Wallet", () => {
-    beforeEach(() => Managers.configManager.setFromPreset("devnet"));
+    beforeEach(() => Managers.configManager.setConfig(devnet));
 
     describe("toString", () => {
         // TODO implementation is right?
@@ -164,7 +167,7 @@ describe("Models - Wallet", () => {
             // use 2nd signature as a base
             const transaction = TransactionFactory.secondSignature()
                 .withVersion(version)
-                .withNetwork("devnet")
+                .withNetworkConfig(devnet)
                 .withPassphrase("super secret passphrase")
                 .create()[0];
             return Object.assign(transaction, { type, asset });
@@ -177,7 +180,7 @@ describe("Models - Wallet", () => {
 
         it("should return correct audit data for Transfer type", () => {
             const transaction = TransactionFactory.transfer("D61xc3yoBQDitwjqUspMPx1ooET6r1XLt7")
-                .withNetwork("devnet")
+                .withNetworkConfig(devnet)
                 .withPassphrase("super secret passphrase")
                 .create()[0];
             const audit = testWallet.auditApply(transaction);
@@ -193,7 +196,7 @@ describe("Models - Wallet", () => {
 
         it("should return correct audit data for 2nd signature type", () => {
             const transaction = TransactionFactory.secondSignature()
-                .withNetwork("devnet")
+                .withNetworkConfig(devnet)
                 .withPassphrase("super secret passphrase")
                 .create()[0];
             const audit = testWallet.auditApply(transaction);
@@ -209,7 +212,7 @@ describe("Models - Wallet", () => {
 
         it("should return correct audit data for delegate registration type", () => {
             const transaction = TransactionFactory.delegateRegistration()
-                .withNetwork("devnet")
+                .withNetworkConfig(devnet)
                 .withPassphrase("super secret passphrase")
                 .create()[0];
             const audit = testWallet.auditApply(transaction);
@@ -226,7 +229,7 @@ describe("Models - Wallet", () => {
 
         it("should return correct audit data for delegate resignation type", () => {
             const transaction = TransactionFactory.delegateResignation()
-                .withNetwork("unitnet")
+                .withNetworkConfig(unitnet)
                 .withPassphrase("super secret passphrase")
                 .create()[0];
             const audit = testWallet.auditApply(transaction);
@@ -244,7 +247,7 @@ describe("Models - Wallet", () => {
             const transaction = TransactionFactory.vote(
                 "02337316a26d8d49ec27059bd0589c49ba474029c3627715380f4df83fb431aece",
             )
-                .withNetwork("devnet")
+                .withNetworkConfig(devnet)
                 .withPassphrase("super secret passphrase")
                 .create()[0];
             const audit = testWallet.auditApply(transaction);
@@ -340,9 +343,9 @@ describe("Models - Wallet", () => {
 
         describe("when wallet has multisignature", () => {
             it("should return correct audit data for Transfer type", () => {
-                configManager.setFromPreset("testnet");
+                configManager.setConfig(testnet);
                 const transaction = TransactionFactory.transfer("D61xc3yoBQDitwjqUspMPx1ooET6r1XLt7")
-                    .withNetwork("devnet")
+                    .withNetworkConfig(devnet)
                     .withPassphrase("super secret passphrase")
                     .create()[0];
 
@@ -364,14 +367,14 @@ describe("Models - Wallet", () => {
                 const audit = testWallet.auditApply(transaction);
                 expect(audit).toEqual([{ Mutisignature: false }, { Transfer: true }]);
 
-                configManager.setFromPreset("devnet");
+                configManager.setConfig(devnet);
             });
         });
 
         describe("when wallet has 2nd public key", () => {
             it("should return correct audit data for Transfer type", () => {
                 const transaction = TransactionFactory.transfer("D61xc3yoBQDitwjqUspMPx1ooET6r1XLt7")
-                    .withNetwork("devnet")
+                    .withNetworkConfig(devnet)
                     .withPassphrasePair({
                         passphrase: "super secret passphrase",
                         secondPassphrase: "super secret secondpassphrase",

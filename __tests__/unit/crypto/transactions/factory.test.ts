@@ -14,6 +14,8 @@ import {
     TransactionFactory,
     Utils as TransactionUtils,
 } from "../../../../packages/crypto/src/transactions";
+import { devnet } from "../../../utils/config/devnet/devnet";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { transaction as transactionFixture } from "../fixtures/transaction";
 import { transaction as transactionDataFixture } from "../fixtures/transaction";
 import { createRandomTx } from "./__support__";
@@ -26,7 +28,7 @@ const expectTransaction = ({ data }): void => {
 };
 
 beforeEach(() => {
-    configManager.setFromPreset("devnet");
+    configManager.setConfig(devnet);
 
     transactionData = { ...transactionDataFixture };
     transactionDataJSON = {
@@ -101,7 +103,7 @@ describe("TransactionFactory", () => {
 
         // Old tests
         it("should match transaction id", () => {
-            configManager.setFromPreset("testnet");
+            configManager.setConfig(testnet);
             for (let i = 0; i < 3; i++) {
                 const transaction = createRandomTx(i);
                 const originalId = transaction.data.id;

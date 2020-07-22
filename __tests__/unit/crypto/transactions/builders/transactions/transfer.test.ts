@@ -1,8 +1,9 @@
 import "jest-extended";
 
 import { configManager } from "../../../../../../packages/crypto/src/managers";
+import { testnet } from "../../../../../utils/config/testnet/testnet";
 
-configManager.setFromPreset("testnet");
+configManager.setConfig(testnet);
 
 import { Utils } from "@arkecosystem/crypto";
 import { TransactionType } from "../../../../../../packages/crypto/src/enums";

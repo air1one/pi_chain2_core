@@ -3,6 +3,7 @@ import "jest-extended";
 import { Managers, Networks, Types, Utils } from "@arkecosystem/crypto";
 import { Delegate } from "../../../packages/core-forger/src/delegate";
 import { TransactionFactory } from "../../helpers/transaction-factory";
+import { testnet } from "../../utils/config/testnet/testnet";
 
 const dummy = {
     plainPassphrase: "clay harbor enemy utility margin pretty hub comic piece aerobic umbrella acquire",
@@ -12,7 +13,7 @@ const dummy = {
 };
 
 describe("Delegate", () => {
-    beforeAll(() => Managers.configManager.setFromPreset("testnet"));
+    beforeAll(() => Managers.configManager.setConfig(testnet));
 
     describe("constructor", () => {
         it("should be ok with a plain text passphrase", () => {

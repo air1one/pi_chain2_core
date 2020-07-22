@@ -7,6 +7,7 @@ import { Crypto } from "@arkecosystem/crypto";
 import delay from "delay";
 import cloneDeep from "lodash.clonedeep";
 import { secrets } from "../../../utils/config/testnet/delegates.json";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { setUpContainer } from "../../../utils/helpers/container";
 
 jest.setTimeout(1200000);
@@ -29,6 +30,7 @@ export const setUp = async (): Promise<Container.IContainer> => {
                 "@arkecosystem/core-api",
                 "@arkecosystem/core-forger",
             ],
+            networkConfig: testnet,
         });
 
         const databaseService = app.resolvePlugin<Database.IDatabaseService>("database");

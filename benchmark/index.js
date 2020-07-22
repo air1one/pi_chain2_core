@@ -4,8 +4,9 @@ const {
 const {
     Managers
 } = require("@arkecosystem/crypto");
+const { mainnet } = require("../__tests__/utils/config/mainnet/mainnet");
 
-Managers.configManager.setFromPreset("mainnet");
+Managers.configManager.setConfig(mainnet);
 
 benchmarker('core', [{
         name: 'new Block()',

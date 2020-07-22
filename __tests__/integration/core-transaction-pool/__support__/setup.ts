@@ -2,6 +2,7 @@ import { app } from "@arkecosystem/core-container";
 import { asValue } from "awilix";
 import { defaults as defaultsBlockchain } from "../../../../packages/core-blockchain/src/defaults";
 import { defaults as defaultsPool } from "../../../../packages/core-transaction-pool/src/defaults";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 import { registerWithContainer, setUpContainer } from "../../../utils/helpers/container";
 
 jest.setTimeout(60000);
@@ -33,6 +34,7 @@ export const setUp = async () => {
             exit: "@arkecosystem/core-blockchain",
             exclude: ["@arkecosystem/core-transaction-pool"],
             network: "unitnet",
+            networkConfig: unitnet,
         });
     } catch (error) {
         console.error(error.stack);
@@ -48,6 +50,7 @@ export const setUpFull = async () => {
             exit: "@arkecosystem/core-transaction-pool",
             exclude: ["@arkecosystem/core-transaction-pool"],
             network: "unitnet",
+            networkConfig: unitnet,
         });
 
         app.register("pkg.transaction-pool.opts", asValue(defaultsPool));

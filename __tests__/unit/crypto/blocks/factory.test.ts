@@ -3,6 +3,7 @@ import "jest-extended";
 import { Block, BlockFactory } from "../../../../packages/crypto/src/blocks";
 import { IBlockData } from "../../../../packages/crypto/src/interfaces";
 import { configManager } from "../../../../packages/crypto/src/managers";
+import { devnet } from "../../../utils/config/devnet/devnet";
 import { blockWithExceptions, dummyBlock } from "../fixtures/block";
 
 export const expectBlock = ({ data }: { data: IBlockData }) => {
@@ -17,7 +18,7 @@ export const expectBlock = ({ data }: { data: IBlockData }) => {
     expect(data).toEqual(blockWithoutTransactions);
 };
 
-beforeEach(() => configManager.setFromPreset("devnet"));
+beforeEach(() => configManager.setConfig(devnet));
 
 describe("BlockFactory", () => {
     describe(".fromHex", () => {
@@ -41,7 +42,7 @@ describe("BlockFactory", () => {
             const milestone = configManager.getMilestone();
             const spyGetMilestone = jest.spyOn(configManager, "getMilestone").mockReturnValue({
                 ...milestone,
-                aip11: true
+                aip11: true,
             });
             expectBlock(BlockFactory.fromData(dummyBlock, { deserializeTransactionsUnchecked: true }));
             spyGetMilestone.mockRestore();
@@ -53,22 +54,18 @@ describe("BlockFactory", () => {
         });
 
         it("should throw on invalid input data - block property has an unexpected value", () => {
-            const b1 = Object.assign({}, blockWithExceptions, { timestamp: 'abcd' });
-            expect(() => BlockFactory.fromData(b1 as any)).toThrowError(
-                /Invalid.*timestamp.*integer.*abcd/i
-            );
+            const b1 = Object.assign({}, blockWithExceptions, { timestamp: "abcd" });
+            expect(() => BlockFactory.fromData(b1 as any)).toThrowError(/Invalid.*timestamp.*integer.*abcd/i);
 
-            const b2 = Object.assign({}, blockWithExceptions, { totalAmount: 'abcd' });
-            expect(() => BlockFactory.fromData(b2 as any)).toThrowError(
-                /Invalid.*totalAmount.*bignumber.*abcd/i
-            );
+            const b2 = Object.assign({}, blockWithExceptions, { totalAmount: "abcd" });
+            expect(() => BlockFactory.fromData(b2 as any)).toThrowError(/Invalid.*totalAmount.*bignumber.*abcd/i);
         });
 
         it("should throw on invalid input data - required block property is missing", () => {
             const b = Object.assign({}, blockWithExceptions);
             delete b.generatorPublicKey;
             expect(() => BlockFactory.fromData(b as any)).toThrowError(
-                /Invalid.*required property.*generatorPublicKey/i
+                /Invalid.*required property.*generatorPublicKey/i,
             );
         });
     });

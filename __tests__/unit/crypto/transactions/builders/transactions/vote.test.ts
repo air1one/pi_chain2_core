@@ -1,8 +1,9 @@
 import "jest-extended";
 
 import { configManager } from "../../../../../../packages/crypto/src/managers";
+import { testnet } from "../../../../../utils/config/testnet/testnet";
 
-configManager.setFromPreset("testnet");
+configManager.setConfig(testnet);
 
 import { TransactionType } from "../../../../../../packages/crypto/src/enums";
 import { Keys } from "../../../../../../packages/crypto/src/identities";

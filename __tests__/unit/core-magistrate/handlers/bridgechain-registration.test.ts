@@ -19,6 +19,7 @@ import {
     IBusinessWalletAttributes,
 } from "../../../../packages/core-magistrate-transactions/src/interfaces";
 import { businessIndexer, MagistrateIndex } from "../../../../packages/core-magistrate-transactions/src/wallet-manager";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { bridgechainRegistrationAsset1, bridgechainRegistrationAsset2, businessRegistrationAsset1 } from "../helper";
 
 jest.mock("@arkecosystem/core-container", () => {
@@ -52,7 +53,7 @@ let walletManager: State.IWalletManager;
 Managers.configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
 
 describe("should test marketplace transaction handlers", () => {
-    Managers.configManager.setFromPreset("testnet");
+    Managers.configManager.setConfig(testnet);
 
     Handlers.Registry.registerTransactionHandler(BusinessRegistrationTransactionHandler);
     Handlers.Registry.registerTransactionHandler(BridgechainRegistrationTransactionHandler);

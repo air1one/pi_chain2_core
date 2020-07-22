@@ -10,6 +10,7 @@ import { Delegate } from "../../../packages/core-forger/src/delegate";
 import { ForgerManager } from "../../../packages/core-forger/src/manager";
 import { testnet } from "../../../packages/crypto/src/networks";
 import { TransactionFactory } from "../../helpers/transaction-factory";
+import { unitnet } from "../../utils/config/unitnet/unitnet";
 import { sampleBlock } from "./__fixtures__/block";
 import { delegate } from "./__fixtures__/delegate";
 
@@ -35,7 +36,7 @@ describe("Forger Manager", () => {
         it("should forge a block", async () => {
             // NOTE: make sure we have valid transactions from an existing wallet
             const transactions = TransactionFactory.transfer()
-                .withNetwork("testnet")
+                .withNetworkConfig(testnet)
                 .withPassphrase("clay harbor enemy utility margin pretty hub comic piece aerobic umbrella acquire")
                 .build();
 
@@ -81,7 +82,7 @@ describe("Forger Manager", () => {
         it("should not forge a block when not enough time left", async () => {
             // NOTE: make sure we have valid transactions from an existing wallet
             const transactions = TransactionFactory.transfer()
-                .withNetwork("testnet")
+                .withNetworkConfig(testnet)
                 .withPassphrase("clay harbor enemy utility margin pretty hub comic piece aerobic umbrella acquire")
                 .build();
 

@@ -6,6 +6,7 @@ import {
     Transactions as MagistrateTransactions,
 } from "@arkecosystem/core-magistrate-crypto";
 import { Errors, Managers, Transactions, Utils } from "@arkecosystem/crypto";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import {
     bridgechainRegistrationAsset1,
     bridgechainRegistrationAsset2,
@@ -17,7 +18,7 @@ let builder: MagistrateBuilders.BridgechainRegistrationBuilder;
 Managers.configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
 
 describe("Bridgechain registration builder", () => {
-    Managers.configManager.setFromPreset("testnet");
+    Managers.configManager.setConfig(testnet);
     Transactions.TransactionRegistry.registerTransactionType(MagistrateTransactions.BridgechainRegistrationTransaction);
 
     beforeEach(() => {

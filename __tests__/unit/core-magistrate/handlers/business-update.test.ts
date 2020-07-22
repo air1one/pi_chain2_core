@@ -15,6 +15,7 @@ import { businessIndexer, MagistrateIndex } from "@arkecosystem/core-magistrate-
 import { Wallets } from "@arkecosystem/core-state";
 import { Handlers } from "@arkecosystem/core-transactions";
 import { Managers, Utils } from "@arkecosystem/crypto";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { businessRegistrationAsset1, businessUpdateAsset1 } from "../helper";
 
 // Mock database with walletManager
@@ -45,17 +46,15 @@ let businessRegistrationBuilder: MagistrateBuilders.BusinessRegistrationBuilder;
 let businessResignationBuilder: MagistrateBuilders.BusinessResignationBuilder;
 let businessUpdateBuilder: MagistrateBuilders.BusinessUpdateBuilder;
 
-
 // Sender Wallet declaration
 let senderWallet: Wallets.Wallet;
 
 // Wallet Manager declaration
 let walletManager: State.IWalletManager;
 
-
 describe("Business update handler", () => {
     // Manager configurations
-    Managers.configManager.setFromPreset("testnet");
+    Managers.configManager.setConfig(testnet);
     Managers.configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
 
     // Handler registries
@@ -88,7 +87,6 @@ describe("Business update handler", () => {
 
     describe("Business update handler", () => {
         it("should throw BusinessIsNotRegisteredError, because business is not registered", async () => {
-
             const actual = businessUpdateBuilder
                 .businessUpdateAsset(businessUpdateAsset1)
                 .nonce("1")
@@ -99,7 +97,7 @@ describe("Business update handler", () => {
             ).rejects.toThrowError(BusinessIsNotRegisteredError);
         });
 
-        describe("Business registered tests", ()=>{
+        describe("Business registered tests", () => {
             let registeredTransaction;
 
             beforeEach(async () => {
@@ -109,7 +107,6 @@ describe("Business update handler", () => {
                     .sign("clay harbor enemy utility margin pretty hub comic piece aerobic umbrella acquire");
 
                 await businessRegistrationHandler.applyToSender(registeredTransaction.build(), walletManager);
-
             });
 
             it("should resolve, because business is registered", async () => {
@@ -138,12 +135,7 @@ describe("Business update handler", () => {
                 await expect(
                     businessUpdateHandler.throwIfCannotBeApplied(actual.build(), senderWallet, walletManager),
                 ).rejects.toThrowError(BusinessIsResignedError);
-
-
             });
         });
-
-
     });
-
 });

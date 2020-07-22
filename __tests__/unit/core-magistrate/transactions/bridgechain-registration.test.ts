@@ -3,6 +3,7 @@ import "jest-extended";
 import { Builders as MagistrateBuilders } from "@arkecosystem/core-magistrate-crypto";
 import { Managers, Transactions, Validation } from "@arkecosystem/crypto";
 import { BridgechainRegistrationTransaction } from "../../../../packages/core-magistrate-crypto/src/transactions";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { bridgechainRegistrationAsset1, bridgechainRegistrationAsset2, checkCommonFields } from "../helper";
 
 let builder: MagistrateBuilders.BridgechainRegistrationBuilder;
@@ -10,7 +11,7 @@ let builder: MagistrateBuilders.BridgechainRegistrationBuilder;
 Managers.configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
 
 describe("Bridgechain registration transaction", () => {
-    Managers.configManager.setFromPreset("testnet");
+    Managers.configManager.setConfig(testnet);
 
     Transactions.TransactionRegistry.registerTransactionType(BridgechainRegistrationTransaction);
 

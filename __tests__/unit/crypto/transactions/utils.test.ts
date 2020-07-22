@@ -16,6 +16,8 @@ import {
     Utils as TransactionUtils,
 } from "../../../../packages/crypto/src/transactions";
 import { TransactionFactory as TestTransactionFactory } from "../../../helpers/transaction-factory";
+import { devnet } from "../../../utils/config/devnet/devnet";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { transaction as transactionDataFixture } from "../fixtures/transaction";
 
 configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
@@ -106,7 +108,7 @@ const createRandomTx = type => {
 
 describe("Transaction", () => {
     beforeEach(() => {
-        configManager.setFromPreset("devnet");
+        configManager.setConfig(devnet);
 
         transactionData = { ...transactionDataFixture };
         transactionDataJSON = {
@@ -162,7 +164,7 @@ describe("Transaction", () => {
         });
 
         it("should throw when getting an unsupported version", () => {
-            configManager.setFromPreset("testnet");
+            configManager.setConfig(testnet);
 
             const transaction = BuilderFactory.transfer()
                 .recipientId("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff")
@@ -177,7 +179,7 @@ describe("Transaction", () => {
             hex = hex.slice(0, 2) + "04" + hex.slice(4);
             expect(() => TransactionFactory.fromHex(hex)).toThrow(TransactionVersionError);
 
-            configManager.setFromPreset("devnet");
+            configManager.setConfig(devnet);
         });
     });
 
@@ -185,7 +187,7 @@ describe("Transaction", () => {
         let transaction: ITransactionData;
 
         beforeEach(() => {
-            configManager.setFromPreset("testnet");
+            configManager.setConfig(testnet);
 
             transaction = TestTransactionFactory.transfer("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000)
                 .withFee(2000)
@@ -212,7 +214,7 @@ describe("Transaction", () => {
         let transaction: ITransactionData;
 
         beforeEach(() => {
-            configManager.setFromPreset("testnet");
+            configManager.setConfig(testnet);
 
             transaction = TestTransactionFactory.transfer("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000)
                 .withFee(2000)

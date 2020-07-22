@@ -2,8 +2,9 @@ import "./mocks/core-container";
 
 import { Managers, Transactions, Utils } from "@arkecosystem/crypto";
 import { Memory } from "../../../packages/core-transaction-pool/src/memory";
+import { testnet } from "../../utils/config/testnet/testnet";
 
-Managers.configManager.setFromPreset("testnet");
+Managers.configManager.setConfig(testnet);
 Managers.configManager.getMilestone().aip11 = true;
 
 describe("Memory", () => {

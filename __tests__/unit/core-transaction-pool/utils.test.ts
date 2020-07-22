@@ -3,6 +3,9 @@ import devnetMilestones from "@arkecosystem/crypto/src/networks/devnet/milestone
 import mainnetMilestones from "@arkecosystem/crypto/src/networks/mainnet/milestones.json";
 import unitnetMilestones from "@arkecosystem/crypto/src/networks/unitnet/milestones.json";
 import { getMaxTransactionBytes } from "../../../packages/core-transaction-pool/src/utils";
+import { devnet } from "../../utils/config/devnet/devnet";
+import { mainnet } from "../../utils/config/mainnet/mainnet";
+import { unitnet } from "../../utils/config/unitnet/unitnet";
 
 const store = {
     getLastHeight: () => 1,
@@ -21,7 +24,7 @@ describe("Utils", () => {
         it.each([[1], [100000], [1000000000]])(
             "should return maxTransactionBytes from unitnet maxPayload milestones value at height %i",
             async height => {
-                Managers.configManager.setFromPreset("unitnet");
+                Managers.configManager.setConfig(unitnet);
                 store.getLastHeight = () => height;
 
                 // should give the same value as maxPayload is defined at height 1 and never changed
@@ -32,7 +35,7 @@ describe("Utils", () => {
         it.each([[1, 0], [21600, 2], [910000, 3]])(
             "should return maxTransactionBytes from devnet maxPayload milestones value at height %i",
             async (height, milestonesIndex) => {
-                Managers.configManager.setFromPreset("devnet");
+                Managers.configManager.setConfig(devnet);
                 store.getLastHeight = () => height;
 
                 // should give the same value as maxPayload is defined at height 1 and never changed
@@ -43,7 +46,7 @@ describe("Utils", () => {
         it.each([[1, 0], [6600000, 2], [8128000, 2], [9000000, 2]])(
             "should return maxTransactionBytes from mainnet maxPayload milestones value at height %i",
             async (height, milestonesIndex) => {
-                Managers.configManager.setFromPreset("mainnet");
+                Managers.configManager.setConfig(mainnet);
                 store.getLastHeight = () => height;
 
                 // should give the same value as maxPayload is defined at height 1 and never changed

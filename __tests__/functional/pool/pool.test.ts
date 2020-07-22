@@ -2,11 +2,12 @@ import { Identities, Managers, Utils } from "@arkecosystem/crypto";
 import delay from "delay";
 import { TransactionFactory } from "../../helpers/transaction-factory";
 import { secrets } from "../../utils/config/testnet/delegates.json";
+import { testnet } from "../../utils/config/testnet/testnet";
 import * as support from "./__support__";
 
 beforeAll(async () => {
     await support.setUp();
-    Managers.configManager.setFromPreset("testnet");
+    Managers.configManager.setConfig(testnet);
 });
 afterAll(support.tearDown);
 

@@ -8,14 +8,16 @@ import { Slots } from "../../../../packages/crypto/src/crypto";
 import { IBlock } from "../../../../packages/crypto/src/interfaces";
 import { configManager } from "../../../../packages/crypto/src/managers";
 import * as networks from "../../../../packages/crypto/src/networks";
-import { testnet } from "../../../../packages/crypto/src/networks";
 import { NetworkName } from "../../../../packages/crypto/src/types";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
+import { devnet } from "../../../utils/config/devnet/devnet";
+import { mainnet } from "../../../utils/config/mainnet/mainnet";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { dummyBlock, dummyBlock2 } from "../fixtures/block";
 
-const { outlookTable } = configManager.getPreset("mainnet").exceptions;
+const { outlookTable } = mainnet.exceptions;
 
-beforeEach(() => configManager.setFromPreset("devnet"));
+beforeEach(() => configManager.setConfig(devnet));
 
 describe("Block", () => {
     const data = {
@@ -96,7 +98,7 @@ describe("Block", () => {
                 reward: Utils.BigNumber.make(0),
             };
             const transactions = TransactionFactory.transfer("DB4gFuDztmdGALMb8i1U4Z4R5SktxpNTAY", 10)
-                .withNetwork("devnet")
+                .withNetworkConfig(devnet)
                 .withPassphrase("super cool passphrase")
                 .create(210);
 
@@ -118,7 +120,7 @@ describe("Block", () => {
                 reward: Utils.BigNumber.make(0),
             };
             const transactions = TransactionFactory.transfer("DB4gFuDztmdGALMb8i1U4Z4R5SktxpNTAY", 10)
-                .withNetwork("devnet")
+                .withNetworkConfig(devnet)
                 .withPassphrase("super cool passphrase")
                 .create();
 
@@ -175,7 +177,7 @@ describe("Block", () => {
                 reward: Utils.BigNumber.make(0),
             };
             const transactions = TransactionFactory.transfer("DB4gFuDztmdGALMb8i1U4Z4R5SktxpNTAY", 10)
-                .withNetwork("devnet")
+                .withNetworkConfig(devnet)
                 .withTimestamp(optionsDefault.timestamp)
                 .withPassphrase("super cool passphrase")
                 .create();
@@ -198,7 +200,7 @@ describe("Block", () => {
                 reward: Utils.BigNumber.make(0),
             };
             const transactions = TransactionFactory.transfer("ANYiQJSPSoDT8U9Quh5vU8timD2RM7RS38", 10)
-                .withNetwork("testnet")
+                .withNetworkConfig(testnet)
                 .withVersion(2)
                 .withExpiration(52)
                 .withPassphrase("super cool passphrase")
@@ -222,7 +224,7 @@ describe("Block", () => {
             };
 
             const transactions = TransactionFactory.transfer("ANYiQJSPSoDT8U9Quh5vU8timD2RM7RS38", 1)
-                .withNetwork("testnet")
+                .withNetworkConfig(testnet)
                 .withVersion(1)
                 .withTimestamp(optionsDefault.timestamp - 21601)
                 .withPassphrase("super cool passphrase")
@@ -248,7 +250,7 @@ describe("Block", () => {
             };
 
             const transactions = TransactionFactory.transfer("ANYiQJSPSoDT8U9Quh5vU8timD2RM7RS38", 1)
-                .withNetwork("testnet")
+                .withNetworkConfig(testnet)
                 .withVersion(1)
                 .withTimestamp(
                     optionsDefault.timestamp +
@@ -277,7 +279,7 @@ describe("Block", () => {
             };
 
             const transactions = TransactionFactory.transfer("ANYiQJSPSoDT8U9Quh5vU8timD2RM7RS38", 1)
-                .withNetwork("testnet")
+                .withNetworkConfig(testnet)
                 .withVersion(1)
                 .withTimestamp(
                     optionsDefault.timestamp +
@@ -307,7 +309,7 @@ describe("Block", () => {
             };
 
             const transactions = TransactionFactory.transfer("ANYiQJSPSoDT8U9Quh5vU8timD2RM7RS38", 1)
-                .withNetwork("mainnet")
+                .withNetworkConfig(mainnet)
                 .withVersion(1)
                 .withTimestamp(
                     optionsDefault.timestamp +
@@ -334,7 +336,7 @@ describe("Block", () => {
             };
 
             const transactions = TransactionFactory.transfer("ANYiQJSPSoDT8U9Quh5vU8timD2RM7RS38", 1)
-                .withNetwork("mainnet")
+                .withNetworkConfig(mainnet)
                 .withVersion(1)
                 .withTimestamp(
                     optionsDefault.timestamp +
@@ -581,7 +583,7 @@ describe("Block", () => {
     });
 
     it("should reorder correctly transactions in deserialization", () => {
-        configManager.setFromPreset("mainnet");
+        configManager.setConfig(mainnet);
 
         const issue = {
             version: 0,
@@ -638,7 +640,7 @@ describe("Block", () => {
         expect(block.data.id).toBe(issue.id);
         expect(block.transactions[0].id).toBe(issue.transactions[1].id);
 
-        configManager.setFromPreset("devnet");
+        configManager.setConfig(devnet);
     });
 
     describe("v1 fix", () => {

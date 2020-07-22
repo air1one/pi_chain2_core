@@ -5,12 +5,13 @@ import { Keys } from "../../../../packages/crypto/src/identities";
 import { configManager } from "../../../../packages/crypto/src/managers";
 import { Signer } from "../../../../packages/crypto/src/transactions";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
+import { testnet } from "../../../utils/config/testnet/testnet";
 
 configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
 
 describe("Signer", () => {
     describe("sign", () => {
-        configManager.setFromPreset("testnet");
+        configManager.setConfig(testnet);
         const keys = Keys.fromPassphrase("secret");
         const transaction = TransactionFactory.transfer("AJWRd23HNEhPLkK1ymMnwnDBX2a7QBZqff", 1000)
             .withVersion(2)

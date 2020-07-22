@@ -4,8 +4,9 @@ import { Identities, Managers } from "@arkecosystem/crypto";
  * Get the unitnet genesis delegates information
  * @return {Array} array of objects like { secret, publicKey, address, balance }
  */
+import { unitnet } from "../../config/unitnet/unitnet";
 
-Managers.configManager.setFromPreset("unitnet");
+Managers.configManager.setConfig(unitnet);
 
 import { secrets } from "../../config/unitnet/delegates.json";
 import { genesisBlock } from "../../config/unitnet/genesisBlock";

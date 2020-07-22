@@ -13,6 +13,7 @@ import { Memory } from "../../../packages/core-transaction-pool/src/memory";
 import { Storage } from "../../../packages/core-transaction-pool/src/storage";
 import { WalletManager } from "../../../packages/core-transaction-pool/src/wallet-manager";
 import { TransactionFactory } from "../../helpers/transaction-factory";
+import { testnet } from "../../utils/config/testnet/testnet";
 import { delegates } from "../../utils/fixtures/testnet/delegates";
 
 let connection: Connection;
@@ -21,7 +22,7 @@ let poolWalletManager: WalletManager;
 let databaseWalletManager: Wallets.WalletManager;
 
 beforeAll(async () => {
-    Managers.configManager.setFromPreset("testnet");
+    Managers.configManager.setConfig(testnet);
 
     const maxTransactionAge = 2700;
     memory = new Memory(maxTransactionAge);

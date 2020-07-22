@@ -30,7 +30,8 @@ import {
 } from "../../../packages/core-transactions/src/errors";
 import { Handlers, Interfaces as TransactionsInterfaces } from "../../../packages/core-transactions/src/index";
 import { TransactionFactory } from "../../helpers/transaction-factory";
-import { htlcSecretHex, htlcSecretHashHex } from "../../utils/fixtures";
+import { testnet } from "../../utils/config/testnet/testnet";
+import { htlcSecretHashHex, htlcSecretHex } from "../../utils/fixtures";
 
 const { EpochTimestamp, BlockHeight } = Enums.HtlcLockExpirationType;
 
@@ -84,7 +85,8 @@ let instance: Interfaces.ITransaction;
 let walletManager: State.IWalletManager;
 
 beforeEach(() => {
-    Managers.configManager.setFromPreset("testnet");
+    Managers.configManager.setConfig(testnet);
+    Managers.configManager.setHeight(2); // aip11
 
     walletManager = new Wallets.WalletManager();
 
@@ -783,7 +785,7 @@ describe("MultiSignatureRegistrationTransaction", () => {
 
 describe("Ipfs", () => {
     beforeAll(() => {
-        Managers.configManager.setFromPreset("testnet");
+        Managers.configManager.setConfig(testnet);
     });
 
     beforeEach(async () => {
@@ -1091,7 +1093,7 @@ describe.each([EpochTimestamp, BlockHeight])("Htlc lock - expiration type %i", e
     };
 
     beforeAll(() => {
-        Managers.configManager.setFromPreset("testnet");
+        Managers.configManager.setConfig(testnet);
     });
 
     beforeEach(async () => {
@@ -1192,7 +1194,7 @@ describe.each([EpochTimestamp, BlockHeight])("Htlc claim - expiration type %i", 
     let pool: Partial<TransactionPool.IConnection>;
 
     beforeAll(() => {
-        Managers.configManager.setFromPreset("testnet");
+        Managers.configManager.setConfig(testnet);
     });
 
     beforeEach(async () => {
@@ -1453,7 +1455,7 @@ describe.each([EpochTimestamp, BlockHeight])("Htlc refund - expiration type %i",
     let pool: Partial<TransactionPool.IConnection>;
 
     beforeAll(() => {
-        Managers.configManager.setFromPreset("testnet");
+        Managers.configManager.setConfig(testnet);
     });
 
     beforeEach(async () => {

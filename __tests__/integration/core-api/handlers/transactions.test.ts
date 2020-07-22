@@ -6,6 +6,7 @@ import { utils } from "../utils";
 import { Identities } from "@arkecosystem/crypto";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
 import { genesisBlock } from "../../../utils/config/testnet/genesisBlock";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { delegates } from "../../../utils/fixtures/testnet/delegates";
 import { generateWallets } from "../../../utils/generators/wallets";
 
@@ -138,20 +139,9 @@ describe("API 2.0 - Transactions", () => {
         });
     });
 
-    describe("GET /transactions/unconfirmed", () => {
-        it("should GET all the unconfirmed transactions", async () => {
-            await utils.createTransaction();
-
-            const response = await utils.request("GET", "transactions/unconfirmed");
-            expect(response).toBeSuccessfulResponse();
-            expect(response.data.data).toBeArray();
-            expect(response.data.data).not.toBeEmpty();
-        });
-    });
-
     describe("GET /transactions/unconfirmed/:id", () => {
         it("should GET an unconfirmed transaction by the given identifier", async () => {
-            const transaction = await utils.createTransaction();
+            const transaction = await utils.createTransaction("another tx");
 
             const response = await utils.request("GET", `transactions/unconfirmed/${transaction.id}`);
             expect(response).toBeSuccessfulResponse();
@@ -167,6 +157,17 @@ describe("API 2.0 - Transactions", () => {
                 ),
                 404,
             );
+        });
+    });
+
+    describe("GET /transactions/unconfirmed", () => {
+        it("should GET all the unconfirmed transactions", async () => {
+            await utils.createTransaction();
+
+            const response = await utils.request("GET", "transactions/unconfirmed");
+            expect(response).toBeSuccessfulResponse();
+            expect(response.data.data).toBeArray();
+            expect(response.data.data).not.toBeEmpty();
         });
     });
 
@@ -506,7 +507,7 @@ describe("API 2.0 - Transactions", () => {
 
     describe("POST /transactions", () => {
         const transactions = TransactionFactory.transfer(delegates[1].address)
-            .withNetwork("testnet")
+            .withNetworkConfig(testnet)
             .withPassphrase(delegates[0].secret)
             .create(40);
 
@@ -532,7 +533,7 @@ describe("API 2.0 - Transactions", () => {
                 delegates[1].address,
                 245098000000000 - 5098000000000, // a bit less than the delegates' balance
             )
-                .withNetwork("testnet")
+                .withNetworkConfig(testnet)
                 .withPassphrase(delegates[0].secret)
                 .create(2);
 
@@ -591,7 +592,7 @@ describe("API 2.0 - Transactions", () => {
                 const lastAmountPlusFee = +sender.balance - (txNumber - 1) * amountPlusFee + 1;
 
                 const transactions = TransactionFactory.transfer(receivers[0].address, amountPlusFee - transferFee)
-                    .withNetwork("testnet")
+                    .withNetworkConfig(testnet)
                     .withPassphrase(sender.secret)
                     .create(txNumber - 1);
 
@@ -600,7 +601,7 @@ describe("API 2.0 - Transactions", () => {
                     receivers[1].address,
                     lastAmountPlusFee - transferFee,
                 )
-                    .withNetwork("testnet")
+                    .withNetworkConfig(testnet)
                     .withPassphrase(sender.secret)
                     .withNonce(senderNonce.plus(txNumber - 1))
                     .create();

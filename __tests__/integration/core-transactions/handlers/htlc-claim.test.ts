@@ -5,8 +5,9 @@ import { Delegate } from "../../../../packages/core-forger/src/delegate";
 import { WalletManager } from "../../../../packages/core-state/src/wallets";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
 import { genesisBlock } from "../../../utils/config/unitnet/genesisBlock";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
+import { htlcSecretHashHex, htlcSecretHex } from "../../../utils/fixtures";
 import { wallets } from "../../../utils/fixtures/unitnet";
-import { htlcSecretHex, htlcSecretHashHex } from "../../../utils/fixtures";
 import { setUp, tearDown } from "../__support__/setup";
 
 let container: Container.IContainer;
@@ -62,7 +63,7 @@ describe("Htlc claim handler bootstrap", () => {
         };
 
         const lockTransaction = TransactionFactory.htlcLock(htlcLockAsset, recipientId)
-            .withNetwork("unitnet")
+            .withNetworkConfig(unitnet)
             .withPassphrase(sender.passphrase)
             .withTimestamp(optionsDefault.timestamp)
             .createOne();
@@ -76,7 +77,7 @@ describe("Htlc claim handler bootstrap", () => {
             unlockSecret: htlcSecretHex,
             lockTransactionId: lockTransaction.id,
         })
-            .withNetwork("unitnet")
+            .withNetworkConfig(unitnet)
             .withPassphrase(claimer.passphrase) // anyone can ask for claim
             .withTimestamp(optionsDefault.timestamp + 1000)
             .createOne();

@@ -1,6 +1,7 @@
 import { Handlers as MagistrateHandlers } from "@arkecosystem/core-magistrate-transactions";
 import { Handlers } from "@arkecosystem/core-transactions";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 
 Handlers.Registry.registerTransactionHandler(MagistrateHandlers.BusinessRegistrationTransactionHandler);
 Handlers.Registry.registerTransactionHandler(MagistrateHandlers.BusinessResignationTransactionHandler);
@@ -19,7 +20,7 @@ export const staticFeeTxs = {
         website: "http://website.cool",
         name: "cool biz",
     })
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(staticFeeMagistrate)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -27,13 +28,13 @@ export const staticFeeTxs = {
     businessUpdate: TransactionFactory.businessUpdate({
         website: "http://websiteupdated.cool",
     })
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(staticFeeMagistrate)
         .withPassphrase(passphrase)
         .build(1)[0],
 
     businessResignation: TransactionFactory.businessResignation()
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(staticFeeMagistrate)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -45,7 +46,7 @@ export const staticFeeTxs = {
         bridgechainRepository: "http://www.repository.com/myorg/myrepo",
         ports: { "@arkecosystem/core-api": 12345 },
     })
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(staticFeeMagistrate)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -54,7 +55,7 @@ export const staticFeeTxs = {
         bridgechainId: "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
         bridgechainRepository: "http://www.newrepository.com/myorg/myrepo",
     })
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(staticFeeMagistrate)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -62,7 +63,7 @@ export const staticFeeTxs = {
     bridgechainResignation: TransactionFactory.bridgechainResignation(
         "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
     )
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(staticFeeMagistrate)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -73,7 +74,7 @@ export const dynamicFeeTxs = {
         website: "http://website.cool",
         name: "cool biz",
     })
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(dynamicFeeMagistrate)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -81,13 +82,13 @@ export const dynamicFeeTxs = {
     businessUpdate: TransactionFactory.businessUpdate({
         website: "http://websiteupdated.cool",
     })
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(dynamicFeeMagistrate)
         .withPassphrase(passphrase)
         .build(1)[0],
 
     businessResignation: TransactionFactory.businessResignation()
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(dynamicFeeMagistrate)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -99,7 +100,7 @@ export const dynamicFeeTxs = {
         bridgechainRepository: "http://www.repository.com/myorg/myrepo",
         ports: { "@arkecosystem/core-api": 12345 },
     })
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(dynamicFeeMagistrate)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -108,7 +109,7 @@ export const dynamicFeeTxs = {
         bridgechainId: "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
         bridgechainRepository: "http://www.newrepository.com/myorg/myrepo",
     })
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(dynamicFeeMagistrate)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -116,7 +117,7 @@ export const dynamicFeeTxs = {
     bridgechainResignation: TransactionFactory.bridgechainResignation(
         "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
     )
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(dynamicFeeMagistrate)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -127,7 +128,7 @@ export const lowFeeTxs = {
         website: "http://website.cool",
         name: "cool biz",
     })
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(lowFee)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -135,13 +136,13 @@ export const lowFeeTxs = {
     businessUpdate: TransactionFactory.businessUpdate({
         website: "http://websiteupdated.cool",
     })
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(lowFee)
         .withPassphrase(passphrase)
         .build(1)[0],
 
     businessResignation: TransactionFactory.businessResignation()
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(lowFee)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -153,7 +154,7 @@ export const lowFeeTxs = {
         bridgechainRepository: "http://www.repository.com/myorg/myrepo",
         ports: { "@arkecosystem/core-api": 12345 },
     })
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(lowFee)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -162,7 +163,7 @@ export const lowFeeTxs = {
         bridgechainId: "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
         bridgechainRepository: "http://www.newrepository.com/myorg/myrepo",
     })
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(lowFee)
         .withPassphrase(passphrase)
         .build(1)[0],
@@ -170,7 +171,7 @@ export const lowFeeTxs = {
     bridgechainResignation: TransactionFactory.bridgechainResignation(
         "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
     )
-        .withNetwork("unitnet")
+        .withNetworkConfig(unitnet)
         .withFee(lowFee)
         .withPassphrase(passphrase)
         .build(1)[0],

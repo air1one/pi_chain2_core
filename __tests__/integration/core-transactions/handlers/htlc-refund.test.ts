@@ -5,6 +5,7 @@ import { Delegate } from "../../../../packages/core-forger/src/delegate";
 import { WalletManager } from "../../../../packages/core-state/src/wallets";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
 import { genesisBlock } from "../../../utils/config/unitnet/genesisBlock";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 import { wallets } from "../../../utils/fixtures/unitnet";
 import { setUp, tearDown } from "../__support__/setup";
 
@@ -61,7 +62,7 @@ describe("Htlc refund handler bootstrap", () => {
         };
 
         const lockTransaction = TransactionFactory.htlcLock(htlcLockAsset, recipientId)
-            .withNetwork("unitnet")
+            .withNetworkConfig(unitnet)
             .withPassphrase(sender.passphrase)
             .withTimestamp(optionsDefault.timestamp)
             .createOne();
@@ -72,7 +73,7 @@ describe("Htlc refund handler bootstrap", () => {
 
         const refunder = wallets[14];
         const refundTransaction = TransactionFactory.htlcRefund({ lockTransactionId: lockTransaction.id })
-            .withNetwork("unitnet")
+            .withNetworkConfig(unitnet)
             .withPassphrase(refunder.passphrase) // anyone can ask for refund
             .withTimestamp(optionsDefault.timestamp + 1000)
             .createOne();

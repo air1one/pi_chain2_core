@@ -5,6 +5,8 @@ import { InvalidMultiSignatureAssetError, PublicKeyError } from "../../../../pac
 import { Address } from "../../../../packages/crypto/src/identities/address";
 import { Keys } from "../../../../packages/crypto/src/identities/keys";
 import { configManager } from "../../../../packages/crypto/src/managers";
+import { devnet } from "../../../utils/config/devnet/devnet";
+import { mainnet } from "../../../utils/config/mainnet/mainnet";
 import { data, passphrase } from "./fixture.json";
 
 describe("Identities - Address", () => {
@@ -125,13 +127,13 @@ describe("Identities - Address", () => {
         });
 
         it("should validate MAINNET addresses", () => {
-            configManager.setConfig(configManager.getPreset("mainnet"));
+            configManager.setConfig(mainnet);
 
             expect(Address.validate("AdVSe37niA3uFUPgCgMUH2tMsHF4LpLoiX")).toBeTrue();
         });
 
         it("should validate DEVNET addresses", () => {
-            configManager.setConfig(configManager.getPreset("devnet"));
+            configManager.setConfig(devnet);
 
             expect(Address.validate("DARiJqhogp2Lu6bxufUFQQMuMyZbxjCydN")).toBeTrue();
         });

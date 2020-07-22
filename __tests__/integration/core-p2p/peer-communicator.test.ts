@@ -7,6 +7,7 @@ import { Blocks, Transactions } from "@arkecosystem/crypto";
 import { getPeerConfig } from "../../../packages/core-p2p/src/socket-server/utils/get-peer-config";
 import { createPeerService, createStubPeer } from "../../helpers/peers";
 import { TransactionFactory } from "../../helpers/transaction-factory";
+import { testnet } from "../../utils/config/testnet/testnet";
 import { genesisBlock } from "../../utils/config/unitnet/genesisBlock";
 import { blocks2to100 } from "../../utils/fixtures/testnet/blocks2to100";
 import { delegates } from "../../utils/fixtures/unitnet";
@@ -70,7 +71,7 @@ describe("PeerCommunicator", () => {
         it("should be ok", async () => {
             await socketManager.addMock("postTransactions", []);
             const transactions = TransactionFactory.transfer(delegates[2].address, 1000)
-                .withNetwork("testnet")
+                .withNetworkConfig(testnet)
                 .withPassphrase(delegates[1].passphrase)
                 .create(1);
 

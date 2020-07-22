@@ -1,7 +1,6 @@
 import "jest-extended";
 
 import { configManager } from "../../../../packages/crypto/src/managers";
-import { devnet } from "../../../../packages/crypto/src/networks";
 import {
     DelegateRegistrationTransaction,
     DelegateResignationTransaction,
@@ -14,16 +13,18 @@ import {
     VoteTransaction,
 } from "../../../../packages/crypto/src/transactions";
 import { BigNumber } from "../../../../packages/crypto/src/utils";
+import { devnet } from "../../../utils/config/devnet/devnet";
+import { mainnet } from "../../../utils/config/mainnet/mainnet";
 
 describe("Transaction", () => {
     describe("should deserialize correctly some tests transactions", () => {
         describe("mainnet", () => {
             beforeEach(() => {
-                configManager.setFromPreset("mainnet");
+                configManager.setConfig(mainnet);
             });
 
             afterEach(() => {
-                configManager.setFromPreset("devnet");
+                configManager.setConfig(devnet);
             });
 
             const txs = [

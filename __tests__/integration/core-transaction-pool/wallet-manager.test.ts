@@ -7,6 +7,7 @@ import { Blockchain as BlockchainClass } from "../../../packages/core-blockchain
 import { BlockProcessor } from "../../../packages/core-blockchain/src/processor";
 import { WalletManager } from "../../../packages/core-transaction-pool/src/wallet-manager";
 import { TransactionFactory } from "../../helpers/transaction-factory";
+import { unitnet } from "../../utils/config/unitnet/unitnet";
 import { delegates, genesisBlock, wallets } from "../../utils/fixtures/unitnet";
 import { generateWallets } from "../../utils/generators/wallets";
 import { setUpFull, tearDownFull } from "./__support__/setup";
@@ -30,7 +31,7 @@ afterAll(async () => {
 describe("throwIfCannotBeApplied", () => {
     it("should add an error for delegate registration when username is already taken", async () => {
         const delegateReg = TransactionFactory.delegateRegistration("genesis_11")
-            .withNetwork("unitnet")
+            .withNetworkConfig(unitnet)
             .withPassphrase(wallets[11].passphrase)
             .build()[0];
 
@@ -43,7 +44,7 @@ describe("throwIfCannotBeApplied", () => {
 
     it("should add an error when voting for a delegate that doesn't exist", async () => {
         const vote = TransactionFactory.vote(wallets[12].keys.publicKey)
-            .withNetwork("unitnet")
+            .withNetworkConfig(unitnet)
             .withPassphrase(wallets[11].passphrase)
             .build()[0];
 
@@ -68,7 +69,7 @@ describe("applyPoolTransactionToSender", () => {
 
             const amount1 = 123 * 10 ** 8;
             const transfer = TransactionFactory.transfer(newAddress, amount1)
-                .withNetwork("unitnet")
+                .withNetworkConfig(unitnet)
                 .withPassphrase(delegate0.secret)
                 .build()[0];
 
@@ -96,7 +97,7 @@ describe("applyPoolTransactionToSender", () => {
             const amount1 = 123 * 10 ** 8;
             const fee = 10;
             const transfer = TransactionFactory.transfer(newAddress, amount1)
-                .withNetwork("unitnet")
+                .withNetworkConfig(unitnet)
                 .withFee(fee)
                 .withPassphrase(delegate0.secret)
                 .build()[0];
@@ -140,7 +141,7 @@ describe("applyPoolTransactionToSender", () => {
 
             for (const t of transfers) {
                 const transfer = TransactionFactory.transfer(t.to.address, t.amount)
-                    .withNetwork("unitnet")
+                    .withNetworkConfig(unitnet)
                     .withPassphrase(t.from.passphrase)
                     .build()[0];
                 const transactionHandler = await Handlers.Registry.get(transfer.type);
@@ -186,7 +187,7 @@ describe("Apply transactions and block rewards to wallets on new block", () => {
         const transferAmount = 1234;
         const transferDelegate = delegates[4];
         const transfer = TransactionFactory.transfer(wallet.address, transferAmount)
-            .withNetwork("unitnet")
+            .withNetworkConfig(unitnet)
             .withPassphrase(transferDelegate.passphrase)
             .create()[0];
 
