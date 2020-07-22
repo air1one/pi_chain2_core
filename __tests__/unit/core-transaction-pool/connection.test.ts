@@ -21,6 +21,7 @@ import { Storage } from "../../../packages/core-transaction-pool/src/storage";
 import { getMaxTransactionBytes } from "../../../packages/core-transaction-pool/src/utils";
 import { WalletManager } from "../../../packages/core-transaction-pool/src/wallet-manager";
 import { BlockFactory, TransactionFactory } from "../../helpers";
+import { unitnet } from "../../utils/config/unitnet/unitnet";
 import { delegates } from "../../utils/fixtures/unitnet";
 import { transactions as mockData } from "./__fixtures__/transactions";
 import { database as databaseService } from "./mocks/database";
@@ -282,7 +283,7 @@ describe("Connection", () => {
             for (const [i, exp] of [0, expiration, expiration + 5].entries()) {
                 transactions.push(
                     TransactionFactory.transfer(mockData.dummy1.data.recipientId)
-                        .withNetwork("unitnet")
+                        .withNetworkConfig(unitnet)
                         .withPassphrase(delegatesSecrets[0])
                         .withFee(SATOSHI + i)
                         .withNonce(nonce)
@@ -913,7 +914,7 @@ describe("Connection", () => {
                 const passphrase = String(i % nDifferentSenders);
 
                 const transaction = TransactionFactory.transfer("AFzQCx5YpGg5vKMBg4xbuYbqkhvMkKfKe5", i + 1)
-                    .withNetwork("unitnet")
+                    .withNetworkConfig(unitnet)
                     .withPassphrase(passphrase)
                     .withFee(rand.intBetween(0.002 * SATOSHI, 2 * SATOSHI))
                     .build()[0];
@@ -986,7 +987,7 @@ describe("Connection", () => {
             const testTransactions: Interfaces.ITransaction[] = [];
             for (let i = 0; i < nAdd; i++) {
                 const transaction = TransactionFactory.transfer("AFzQCx5YpGg5vKMBg4xbuYbqkhvMkKfKe5")
-                    .withNetwork("unitnet")
+                    .withNetworkConfig(unitnet)
                     .withFee(rand.intBetween(0.002 * SATOSHI, 2 * SATOSHI))
                     .withPassphrase(String(i))
                     .build()[0];
@@ -1119,7 +1120,7 @@ describe("Connection", () => {
 
             addTransactions([
                 TransactionFactory.transfer("AabMvWPVKbdTHRcGBpATq9TEMiMD5xeJh9", 2 * 1e8, "#".repeat(64))
-                    .withNetwork("unitnet")
+                    .withNetworkConfig(unitnet)
                     .withPassphrase(delegates[1].passphrase)
                     .build()[0],
             ]);
@@ -1135,7 +1136,7 @@ describe("Connection", () => {
 
             addTransactions([
                 TransactionFactory.transfer("AabMvWPVKbdTHRcGBpATq9TEMiMD5xeJh9", 2 * 1e8, "#".repeat(255))
-                    .withNetwork("unitnet")
+                    .withNetworkConfig(unitnet)
                     .withPassphrase(delegates[1].passphrase)
                     .build()[0],
             ]);

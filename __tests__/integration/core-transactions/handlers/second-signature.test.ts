@@ -5,6 +5,7 @@ import { Delegate } from "../../../../packages/core-forger/src/delegate";
 import { WalletManager } from "../../../../packages/core-state/src/wallets";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
 import { genesisBlock } from "../../../utils/config/unitnet/genesisBlock";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 import { wallets } from "../../../utils/fixtures/unitnet";
 import { setUp, tearDown } from "../__support__/setup";
 
@@ -51,7 +52,7 @@ describe("Second signature handler bootstrap", () => {
         const sender = wallets[11];
 
         const transaction = TransactionFactory.secondSignature(wallets[12].passphrase)
-            .withNetwork("unitnet")
+            .withNetworkConfig(unitnet)
             .withPassphrase(sender.passphrase)
             .withTimestamp(optionsDefault.timestamp)
             .createOne();

@@ -5,6 +5,7 @@ import { Delegate } from "../../../../packages/core-forger/src/delegate";
 import { WalletManager } from "../../../../packages/core-state/src/wallets";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
 import { genesisBlock } from "../../../utils/config/unitnet/genesisBlock";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 import { wallets } from "../../../utils/fixtures/unitnet";
 import { setUp, tearDown } from "../__support__/setup";
 
@@ -52,7 +53,7 @@ describe("Transfer handler bootstrap", () => {
         const recipientId = "APmKYrtyyP34BdqQKyk71NbzQ2VKjG8sB3";
 
         const transaction = TransactionFactory.transfer(recipientId, 12345)
-            .withNetwork("unitnet")
+            .withNetworkConfig(unitnet)
             .withPassphrase(sender.passphrase)
             .withTimestamp(optionsDefault.timestamp)
             .createOne();

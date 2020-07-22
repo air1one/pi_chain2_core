@@ -12,6 +12,7 @@ import { generateRound } from "./utils/generate-round";
 
 import { sortBy } from "@arkecosystem/utils";
 import { asValue } from "awilix";
+import { testnet } from "../../../utils/config/testnet/testnet";
 
 const round = generateRound(delegates.map(delegate => delegate.publicKey), 1);
 
@@ -35,6 +36,7 @@ const setUp = async () => {
             "@arkecosystem/core-exchange-json-rpc",
             "@arkecosystem/core-api",
         ],
+        networkConfig: testnet,
     });
 
     app.register("pkg.p2p.opts", asValue(defaultsPeer));

@@ -2,6 +2,7 @@ import { app } from "@arkecosystem/core-container";
 import { Managers } from "@arkecosystem/crypto";
 import { plugin } from "../../../../packages/core-database-postgres/src/plugin";
 import { plugin as pluginDatabase } from "../../../../packages/core-database/src/plugin";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { registerWithContainer, setUpContainer } from "../../../utils/helpers/container";
 
 jest.setTimeout(60000);
@@ -10,6 +11,7 @@ export const setUp = async () => {
     await setUpContainer({
         exit: "@arkecosystem/core-database-postgres",
         exclude: ["@arkecosystem/core-database-postgres"],
+        networkConfig: testnet,
     });
 
     process.env.CORE_RESET_DATABASE = "1";

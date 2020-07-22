@@ -5,6 +5,7 @@ import { Delegate } from "../../../../packages/core-forger/src/delegate";
 import { WalletManager } from "../../../../packages/core-state/src/wallets";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
 import { genesisBlock } from "../../../utils/config/unitnet/genesisBlock";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 import { wallets } from "../../../utils/fixtures/unitnet";
 import { setUp, tearDown } from "../__support__/setup";
 
@@ -44,7 +45,7 @@ describe("Multi signature handler bootstrap", () => {
         const participants = wallets.slice(0, 3);
 
         const transaction = TransactionFactory.multiSignature(participants.map(p => p.keys.publicKey), 3)
-            .withNetwork("unitnet")
+            .withNetworkConfig(unitnet)
             .withPassphrase(sender.passphrase)
             .withPassphraseList(participants.map(p => p.passphrase))
             .withTimestamp(optionsDefault.timestamp)

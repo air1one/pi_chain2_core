@@ -1,4 +1,5 @@
 import { app } from "@arkecosystem/core-container";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import { registerWithContainer, setUpContainer } from "../../../utils/helpers/container";
 
 jest.setTimeout(60000);
@@ -13,6 +14,7 @@ export const setUp = async () => {
     await setUpContainer({
         exit: "@arkecosystem/core-p2p",
         exclude: ["@arkecosystem/core-p2p"],
+        networkConfig: testnet,
     });
 
     // register p2p plugin
@@ -31,6 +33,7 @@ export const tearDown = async () => {
 export const setUpFull = async () => {
     await setUpContainer({
         exit: "@arkecosystem/core-blockchain",
+        networkConfig: testnet,
     });
 };
 

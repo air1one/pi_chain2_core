@@ -61,7 +61,6 @@ describe("Transaction Guard", () => {
             };
 
             let tx = TransactionFactory.transfer(walletGen.address, 1 * 100000000)
-                .withNetwork("unitnet")
                 .withPassphrase(wallets[0].passphrase)
                 .build()[0];
 
@@ -73,7 +72,6 @@ describe("Transaction Guard", () => {
             transactionHandler.applyToRecipient(tx, transactionPool.walletManager);
 
             tx = TransactionFactory.transfer(wallets[0].address, 1)
-                .withNetwork("unitnet")
                 .withPassphrase(walletGen.passphrase)
                 .build()[0];
 
@@ -89,7 +87,6 @@ describe("Transaction Guard", () => {
                 { recipientId: wallets[0].address, amount: "500000000" },
                 { recipientId: walletGen.address, amount: "500000000" },
             ])
-                .withNetwork("unitnet")
                 .withPassphrase(wallets[0].passphrase)
                 .build()[0];
 
@@ -99,7 +96,6 @@ describe("Transaction Guard", () => {
             container.resolvePlugin("database").walletManager.reindex(wallet);
 
             const transaction = TransactionFactory.transfer(walletGen.address, 2 * 100000000)
-                .withNetwork("unitnet")
                 .withNonce(wallet.nonce.plus(1))
                 .withPassphrase(walletGen.passphrase)
                 .build()[0];
@@ -147,7 +143,6 @@ describe("Transaction Guard", () => {
 
                 for (const t of transfers) {
                     const transferTx = TransactionFactory.transfer(t.to.address, t.amount)
-                        .withNetwork("unitnet")
                         .withPassphrase(t.from.passphrase)
                         .build()[0];
 
@@ -156,7 +151,6 @@ describe("Transaction Guard", () => {
 
                 // apply again transfer from 0 to 1
                 const transfer = TransactionFactory.transfer(transfer1.to.address, transfer1.amount)
-                    .withNetwork("unitnet")
                     .withPassphrase(transfer1.from.passphrase)
                     .build()[0];
 
@@ -190,7 +184,6 @@ describe("Transaction Guard", () => {
             const amount1 = 123 * 10 ** 8;
             const fee = 10;
             const transfers = TransactionFactory.transfer(newAddress, amount1)
-                .withNetwork("unitnet")
                 .withFee(fee)
                 .withPassphrase(delegate0.secret)
                 .build();
@@ -218,7 +211,6 @@ describe("Transaction Guard", () => {
             const amount1 = +delegateWallet.balance / 2;
             const fee = 0.1 * 10 ** 8;
             const transfers = TransactionFactory.transfer(newAddress, amount1)
-                .withNetwork("unitnet")
                 .withFee(fee)
                 .withPassphrase(delegate1.secret)
                 .build();
@@ -256,24 +248,20 @@ describe("Transaction Guard", () => {
             const signatureFee = 5 * 1e8;
 
             const transfers = TransactionFactory.transfer(newAddress, amount1)
-                .withNetwork("unitnet")
                 .withFee(fee)
                 .withPassphrase(delegate2.secret)
                 .build();
 
             const nonce = TransactionFactory.getNonce(publicKey);
             const votes = TransactionFactory.vote(delegate2.publicKey)
-                .withNetwork("unitnet")
                 .withPassphrase(newWalletPassphrase)
                 .withNonce(nonce)
                 .build();
             const delegateRegs = TransactionFactory.delegateRegistration()
-                .withNetwork("unitnet")
                 .withPassphrase(newWalletPassphrase)
                 .withNonce(nonce.plus(1))
                 .build();
             const signatures = TransactionFactory.secondSignature()
-                .withNetwork("unitnet")
                 .withPassphrase(newWalletPassphrase)
                 .withNonce(nonce.plus(2))
                 .build();
@@ -326,7 +314,6 @@ describe("Transaction Guard", () => {
             const amount1 = 1000 * 10 ** 8;
             const fee = 0.1 * 10 ** 8;
             const transfers1 = TransactionFactory.transfer(newAddress, amount1)
-                .withNetwork("testnet")
                 .withPassphrase(delegate3.secret)
                 .build();
             await processor.validate(transfers1.map(tx => tx.data));
@@ -341,7 +328,6 @@ describe("Transaction Guard", () => {
             // transfer almost everything from new wallet so that we don't have enough for any other transaction
             const amount2 = 999 * 10 ** 8;
             const transfers2 = TransactionFactory.transfer(delegate3.address, amount2)
-                .withNetwork("testnet")
                 .withPassphrase(newWalletPassphrase)
                 .build();
             await processor.validate(transfers2.map(tx => tx.data));
@@ -358,23 +344,19 @@ describe("Transaction Guard", () => {
 
             const allTransactions = [
                 TransactionFactory.transfer(delegate3.address, transferAmount)
-                    .withNetwork("testnet")
                     .withFee(transferDynFee)
                     .withPassphrase(newWalletPassphrase)
                     .withNonce(Utils.BigNumber.ONE)
                     .build(),
                 TransactionFactory.secondSignature()
-                    .withNetwork("testnet")
                     .withPassphrase(newWalletPassphrase)
                     .withNonce(Utils.BigNumber.ONE)
                     .build(),
                 TransactionFactory.vote(delegate3.publicKey)
-                    .withNetwork("testnet")
                     .withPassphrase(newWalletPassphrase)
                     .withNonce(Utils.BigNumber.ONE)
                     .build(),
                 TransactionFactory.delegateRegistration()
-                    .withNetwork("testnet")
                     .withPassphrase(newWalletPassphrase)
                     .withNonce(Utils.BigNumber.ONE)
                     .build(),
@@ -399,7 +381,6 @@ describe("Transaction Guard", () => {
         it("should not validate 2 double spending transactions", async () => {
             const amount = 245098000000000 - 5098000000000; // a bit less than the delegates' balance
             const transactions = TransactionFactory.transfer(delegates[1].address, amount)
-                .withNetwork("testnet")
                 .withPassphrase(delegates[0].secret)
                 .withNonce(Utils.BigNumber.ZERO)
                 .create(2);
@@ -426,12 +407,10 @@ describe("Transaction Guard", () => {
 
             const nonce = senderWallet.nonce;
             const transactions = TransactionFactory.transfer(receivers[0].address, amountPlusFee - transferFee)
-                .withNetwork("testnet")
                 .withNonce(nonce)
                 .withPassphrase(sender.secret)
                 .create(txNumber - 1);
             const lastTransaction = TransactionFactory.transfer(receivers[0].address, lastAmountPlusFee - transferFee)
-                .withNetwork("testnet")
                 .withNonce(nonce.plus(txNumber - 1))
                 .withPassphrase(sender.secret)
                 .create();
@@ -453,14 +432,12 @@ describe("Transaction Guard", () => {
 
                 const nonce = TransactionFactory.getNonce(sender.publicKey);
                 const transactions = TransactionFactory.transfer(receivers[0].address, amountPlusFee - transferFee)
-                    .withNetwork("testnet")
                     .withPassphrase(sender.secret)
                     .create(txNumber - 1);
                 const lastTransaction = TransactionFactory.transfer(
                     receivers[1].address,
                     lastAmountPlusFee - transferFee,
                 )
-                    .withNetwork("testnet")
                     .withNonce(nonce.plus(txNumber - 1))
                     .withPassphrase(sender.secret)
                     .create();
@@ -486,7 +463,6 @@ describe("Transaction Guard", () => {
             const receivers = generateWallets("unitnet", 1);
 
             const transactions: Interfaces.ITransactionData[] = TransactionFactory.transfer(receivers[0].address, 50)
-                .withNetwork("unitnet")
                 .withPassphrase(sender.secret)
                 .create();
             const transactionId = transactions[0].id;
@@ -501,11 +477,9 @@ describe("Transaction Guard", () => {
         it("should not validate when multiple wallets register the same username in the same transaction payload", async () => {
             const delegateRegistrations = [
                 TransactionFactory.delegateRegistration("test_delegate")
-                    .withNetwork("unitnet")
                     .withPassphrase(wallets[14].passphrase)
                     .build()[0],
                 TransactionFactory.delegateRegistration("test_delegate")
-                    .withNetwork("unitnet")
                     .withPassphrase(wallets[15].passphrase)
                     .build()[0],
             ];
@@ -533,13 +507,11 @@ describe("Transaction Guard", () => {
             const nonce = TransactionFactory.getNonce(Identities.PublicKey.fromPassphrase(wallets[16].passphrase));
 
             const secondSignatureTransaction = TransactionFactory.secondSignature()
-                .withNetwork("unitnet")
                 .withNonce(nonce)
                 .withPassphrase(wallets[16].passphrase)
                 .build()[0];
 
             const transferTransaction = TransactionFactory.transfer("AFzQCx5YpGg5vKMBg4xbuYbqkhvMkKfKe5")
-                .withNetwork("unitnet")
                 .withNonce(nonce.plus(1))
                 .withPassphrase(wallets[16].passphrase)
                 .withSecondPassphrase(wallets[17].passphrase)
@@ -565,7 +537,6 @@ describe("Transaction Guard", () => {
                 const participants = passphrases.map(passphrase => Identities.PublicKey.fromPassphrase(passphrase));
 
                 const multiSigRegistration = TransactionFactory.multiSignature(participants, 3)
-                    .withNetwork("unitnet")
                     .withPassphrase(passphrases[0])
                     .withPassphraseList(passphrases)
                     .build()[0];
@@ -580,7 +551,6 @@ describe("Transaction Guard", () => {
                 const participants = passphrases.map(passphrase => Identities.PublicKey.fromPassphrase(passphrase));
 
                 const multiSigRegistration = TransactionFactory.multiSignature(participants, 3)
-                    .withNetwork("unitnet")
                     .withPassphrase(passphrases[0])
                     .withPassphraseList(passphrases)
                     .build()[0];
@@ -613,11 +583,9 @@ describe("Transaction Guard", () => {
 
                 // generate transfers, "simple" and 2nd signed
                 const transfers = TransactionFactory.transfer("AFzQCx5YpGg5vKMBg4xbuYbqkhvMkKfKe5", 50)
-                    .withNetwork("unitnet")
                     .withPassphrase(sender.secret)
                     .create(modifiedFields.length + 1); // + 1 because we will use it to modify senderPublicKey separately
                 const transfers2ndSigned = TransactionFactory.transfer("AFzQCx5YpGg5vKMBg4xbuYbqkhvMkKfKe5", 50)
-                    .withNetwork("unitnet")
                     .withPassphrasePair(wallets2ndSig[0])
                     .create(modifiedFields.length + 1); // + 1 because we will use it to modify senderPublicKey separately
 
@@ -665,7 +633,6 @@ describe("Transaction Guard", () => {
                 for (const wallet of wallets.slice(0, modifiedFieldsDelReg.length + 1)) {
                     delegateRegs.push(
                         TransactionFactory.delegateRegistration()
-                            .withNetwork("unitnet")
                             .withPassphrase(wallet.passphrase)
                             .create()[0],
                     );
@@ -675,7 +642,6 @@ describe("Transaction Guard", () => {
                 for (const wallet of wallets2ndSig.slice(0, modifiedFieldsDelReg.length + 1)) {
                     delegateRegs2ndSigned.push(
                         TransactionFactory.delegateRegistration()
-                            .withNetwork("unitnet")
                             .withPassphrasePair(wallet)
                             .create()[0],
                     );
@@ -725,7 +691,6 @@ describe("Transaction Guard", () => {
                 for (const wallet of wallets.slice(0, modifiedFieldsVote.length + 1)) {
                     votes.push(
                         TransactionFactory.vote(delegates[21].publicKey)
-                            .withNetwork("unitnet")
                             .withPassphrase(wallet.passphrase)
                             .create()[0],
                     );
@@ -735,7 +700,6 @@ describe("Transaction Guard", () => {
                 for (const wallet of wallets2ndSig.slice(0, modifiedFieldsVote.length + 1)) {
                     votes2ndSigned.push(
                         TransactionFactory.vote(delegates[21].publicKey)
-                            .withNetwork("unitnet")
                             .withPassphrasePair(wallet)
                             .create()[0],
                     );
@@ -782,7 +746,6 @@ describe("Transaction Guard", () => {
                 for (const wallet of wallets.slice(0, modifiedFields2ndSig.length)) {
                     secondSigs.push(
                         TransactionFactory.secondSignature(wallet.passphrase)
-                            .withNetwork("unitnet")
                             .withPassphrase(wallet.passphrase)
                             .create()[0],
                     );
@@ -859,7 +822,6 @@ describe("Transaction Guard", () => {
 
             it("should not validate an already forged transaction", async () => {
                 const transfers = TransactionFactory.transfer(wallets[1].address, 11)
-                    .withNetwork("unitnet")
                     .withPassphrase(wallets[0].passphrase)
                     .create();
 
@@ -875,7 +837,6 @@ describe("Transaction Guard", () => {
 
             it("should not validate an already forged transaction - trying to tweak tx id", async () => {
                 const transfers = TransactionFactory.transfer(wallets[1].address, 11)
-                    .withNetwork("unitnet")
                     .withPassphrase(wallets[0].passphrase)
                     .create();
 
@@ -901,13 +862,11 @@ describe("Transaction Guard", () => {
                 const spy = jest.spyOn(store, "getLastHeight").mockReturnValue(100);
 
                 const transferTransaction = TransactionFactory.transfer("AFzQCx5YpGg5vKMBg4xbuYbqkhvMkKfKe5")
-                    .withNetwork("unitnet")
                     .withPassphrase(wallets[13].passphrase)
                     .withExpiration(102)
                     .build()[0];
 
                 const transferTransaction2 = TransactionFactory.transfer("AFzQCx5YpGg5vKMBg4xbuYbqkhvMkKfKe5")
-                    .withNetwork("unitnet")
                     .withPassphrase(wallets[12].passphrase)
                     .withExpiration(0)
                     .build()[0];
@@ -927,13 +886,11 @@ describe("Transaction Guard", () => {
                 const spy = jest.spyOn(store, "getLastHeight").mockReturnValue(100);
 
                 const transferTransaction = TransactionFactory.transfer("AFzQCx5YpGg5vKMBg4xbuYbqkhvMkKfKe5")
-                    .withNetwork("unitnet")
                     .withPassphrase(wallets[16].passphrase)
                     .withExpiration(50)
                     .build()[0];
 
                 const transferTransaction2 = TransactionFactory.transfer("AFzQCx5YpGg5vKMBg4xbuYbqkhvMkKfKe5")
-                    .withNetwork("unitnet")
                     .withPassphrase(wallets[15].passphrase)
                     .withExpiration(100)
                     .build()[0];
@@ -964,7 +921,6 @@ describe("Transaction Guard", () => {
     describe("__cacheTransactions", () => {
         it("should add transactions to cache", async () => {
             const transactions = TransactionFactory.transfer(wallets[11].address, 35)
-                .withNetwork("unitnet")
                 .withPassphrase(wallets[10].passphrase)
                 .build();
 
@@ -975,7 +931,6 @@ describe("Transaction Guard", () => {
 
         it("should not add a transaction already in cache and add it as an error", async () => {
             const transactions = TransactionFactory.transfer(wallets[12].address, 35)
-                .withNetwork("unitnet")
                 .withPassphrase(wallets[11].passphrase)
                 .build();
 
@@ -997,7 +952,6 @@ describe("Transaction Guard", () => {
     // describe("__cacheTransactions", () => {
     //     it("should add transactions to cache", () => {
     //         const transactions = TransactionFactory.transfer(wallets[11].address, 35)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(wallets[10].passphrase)
     //             .create(3);
     //         jest.spyOn(state, "cacheTransactions").mockReturnValueOnce({ added: transactions, notAdded: [] });
@@ -1007,7 +961,6 @@ describe("Transaction Guard", () => {
 
     //     it("should not add a transaction already in cache and add it as an error", () => {
     //         const transactions = TransactionFactory.transfer(wallets[12].address, 35)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(wallets[11].passphrase)
     //             .create(3);
 
@@ -1031,7 +984,6 @@ describe("Transaction Guard", () => {
     // describe("getBroadcastTransactions", () => {
     //     it("should return broadcast transaction", async () => {
     //         const transactions = TransactionFactory.transfer(wallets[11].address, 25)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(wallets[10].passphrase)
     //             .build(3);
 
@@ -1065,7 +1017,6 @@ describe("Transaction Guard", () => {
 
     //     it("should reject transactions that are too large", () => {
     //         const tx = TransactionFactory.transfer(wallets[12].address)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(wallets[11].passphrase)
     //             .build(3)[0];
 
@@ -1192,7 +1143,6 @@ describe("Transaction Guard", () => {
 
     //     it("should not accept transaction if pool hasExceededMaxTransactions and add it to excess", () => {
     //         const transactions = TransactionFactory.transfer(wallets[11].address, 35)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(wallets[10].passphrase)
     //             .create(3);
 
@@ -1207,7 +1157,6 @@ describe("Transaction Guard", () => {
 
     //     it("should push a ERR_UNKNOWN error if something threw in validated transaction block", () => {
     //         const transactions = TransactionFactory.transfer(wallets[11].address, 35)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(wallets[10].passphrase)
     //             .build(3);
 
@@ -1232,7 +1181,6 @@ describe("Transaction Guard", () => {
     // describe("__validateTransaction", () => {
     //     it("should not validate when recipient is not on the same network", async () => {
     //         const transactions = TransactionFactory.transfer("DEJHR83JFmGpXYkJiaqn7wPGztwjheLAmY", 35)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(wallets[10].passphrase)
     //             .create(3);
 
@@ -1252,11 +1200,9 @@ describe("Transaction Guard", () => {
     //     it("should not validate a delegate registration if an existing registration for the same username from a different wallet exists in the pool", async () => {
     //         const delegateRegistrations = [
     //             TransactionFactory.delegateRegistration("test_delegate")
-    //                 .withNetwork("unitnet")
     //                 .withPassphrase(wallets[16].passphrase)
     //                 .build()[0],
     //             TransactionFactory.delegateRegistration("test_delegate")
-    //                 .withNetwork("unitnet")
     //                 .withPassphrase(wallets[17].passphrase)
     //                 .build()[0],
     //         ];
@@ -1278,17 +1224,14 @@ describe("Transaction Guard", () => {
     //         jest.spyOn(processor.pool.walletManager, "canApply").mockImplementation(() => true);
     //         jest.spyOn(processor.pool, "senderHasTransactionsOfType").mockReturnValue(true);
     //         const vote = TransactionFactory.vote(delegates[0].publicKey)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(wallets[10].passphrase)
     //             .build()[0];
 
     //         const delegateReg = TransactionFactory.delegateRegistration()
-    //             .withNetwork("unitnet")
     //             .withPassphrase(wallets[11].passphrase)
     //             .build()[0];
 
     //         const signature = TransactionFactory.secondSignature(wallets[12].passphrase)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(wallets[12].passphrase)
     //             .build()[0];
 
@@ -1312,7 +1255,6 @@ describe("Transaction Guard", () => {
 
     //         // use a random transaction as a base - then play with type
     //         const baseTransaction = TransactionFactory.delegateRegistration()
-    //             .withNetwork("unitnet")
     //             .withPassphrase(wallets[11].passphrase)
     //             .build()[0];
 
@@ -1346,7 +1288,6 @@ describe("Transaction Guard", () => {
     // describe("__removeForgedTransactions", () => {
     //     it("should remove forged transactions", async () => {
     //         const transfers = TransactionFactory.transfer(delegates[0].senderPublicKey)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(delegates[0].secret)
     //             .build(4);
 
@@ -1371,7 +1312,6 @@ describe("Transaction Guard", () => {
     // describe("__addTransactionsToPool", () => {
     //     it("should add transactions to the pool", () => {
     //         const transfers = TransactionFactory.transfer(delegates[0].senderPublicKey)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(delegates[0].secret)
     //             .create(4);
 
@@ -1392,12 +1332,10 @@ describe("Transaction Guard", () => {
 
     //     it("should delete from accept and broadcast transactions that were not added to the pool", () => {
     //         const added = TransactionFactory.transfer(delegates[0].address)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(delegates[0].secret)
     //             .build(2);
     //         const notAddedError = { type: "ERR_TEST", message: "" };
     //         const notAdded = TransactionFactory.transfer(delegates[1].address)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(delegates[0].secret)
     //             .build(2)
     //             .map(tx => ({
@@ -1426,13 +1364,11 @@ describe("Transaction Guard", () => {
 
     //     it("should delete from accept but keep in broadcast transactions that were not added to the pool because of ERR_POOL_FULL", () => {
     //         const added = TransactionFactory.transfer(delegates[0].address)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(delegates[0].secret)
     //             .build(2);
 
     //         const notAddedError = { type: "ERR_POOL_FULL", message: "" };
     //         const notAdded = TransactionFactory.transfer(delegates[1].address)
-    //             .withNetwork("unitnet")
     //             .withPassphrase(delegates[0].secret)
     //             .build(2)
     //             .map(tx => ({

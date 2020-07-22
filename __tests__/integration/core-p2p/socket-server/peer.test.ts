@@ -151,7 +151,7 @@ describe("Peer socket endpoint", () => {
                 await delay(2000);
                 const dummyBlock = BlockFactory.createDummy();
                 const transaction = TransactionFactory.transfer(wallets[0].address, 111)
-                    .withNetwork("unitnet")
+                    .withNetworkConfig(unitnet)
                     .withPassphrase("one two three")
                     .build();
 
@@ -178,7 +178,7 @@ describe("Peer socket endpoint", () => {
         describe("postTransactions", () => {
             it("should get back 'transaction list is not conform' error when transactions are invalid (already in cache)", async () => {
                 const transactions = TransactionFactory.transfer(wallets[0].address, 111)
-                    .withNetwork("unitnet")
+                    .withNetworkConfig(unitnet)
                     .withPassphrase("one two three")
                     .create(15);
 
@@ -194,7 +194,7 @@ describe("Peer socket endpoint", () => {
 
             it("should reject when sending too much transactions", async () => {
                 const transactions = TransactionFactory.transfer(wallets[0].address, 111)
-                    .withNetwork("unitnet")
+                    .withNetworkConfig(unitnet)
                     .withPassphrase("one two three")
                     .create(50);
 

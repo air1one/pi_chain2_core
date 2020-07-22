@@ -14,6 +14,7 @@ import { fixtures } from "../../../utils";
 import { mainnet } from "../../../utils/config/mainnet/mainnet";
 import { genesisBlock } from "../../../utils/config/testnet/genesisBlock";
 import { testnet } from "../../../utils/config/testnet/testnet";
+import { unitnet } from "../../../utils/config/unitnet/unitnet";
 
 const { BlockFactory } = Blocks;
 const { delegates } = fixtures;
@@ -78,7 +79,7 @@ describe("Block processor", () => {
             let block;
             beforeEach(() => {
                 const transfers = TransactionFactory.transfer(delegates[1].address)
-                    .withNetwork("unitnet")
+                    .withNetworkConfig(unitnet)
                     .withPassphrase(delegates[0].passphrase)
                     .create(11);
 
@@ -295,7 +296,7 @@ describe("Block processor", () => {
                 database.getActiveDelegates = jest.fn(() => [delegates[0]]);
 
                 const transactions = TransactionFactory.transfer(delegates[1].address)
-                    .withNetwork("unitnet")
+                    .withNetworkConfig(unitnet)
                     .withPassphrase(delegates[0].passphrase)
                     .create(2);
 

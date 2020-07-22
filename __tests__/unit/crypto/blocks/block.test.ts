@@ -98,7 +98,7 @@ describe("Block", () => {
                 reward: Utils.BigNumber.make(0),
             };
             const transactions = TransactionFactory.transfer("DB4gFuDztmdGALMb8i1U4Z4R5SktxpNTAY", 10)
-                .withNetwork("devnet")
+                .withNetworkConfig(devnet)
                 .withPassphrase("super cool passphrase")
                 .create(210);
 
@@ -120,7 +120,7 @@ describe("Block", () => {
                 reward: Utils.BigNumber.make(0),
             };
             const transactions = TransactionFactory.transfer("DB4gFuDztmdGALMb8i1U4Z4R5SktxpNTAY", 10)
-                .withNetwork("devnet")
+                .withNetworkConfig(devnet)
                 .withPassphrase("super cool passphrase")
                 .create();
 
@@ -177,7 +177,7 @@ describe("Block", () => {
                 reward: Utils.BigNumber.make(0),
             };
             const transactions = TransactionFactory.transfer("DB4gFuDztmdGALMb8i1U4Z4R5SktxpNTAY", 10)
-                .withNetwork("devnet")
+                .withNetworkConfig(devnet)
                 .withTimestamp(optionsDefault.timestamp)
                 .withPassphrase("super cool passphrase")
                 .create();
@@ -200,7 +200,7 @@ describe("Block", () => {
                 reward: Utils.BigNumber.make(0),
             };
             const transactions = TransactionFactory.transfer("ANYiQJSPSoDT8U9Quh5vU8timD2RM7RS38", 10)
-                .withNetwork("testnet")
+                .withNetworkConfig(testnet)
                 .withVersion(2)
                 .withExpiration(52)
                 .withPassphrase("super cool passphrase")
@@ -224,7 +224,7 @@ describe("Block", () => {
             };
 
             const transactions = TransactionFactory.transfer("ANYiQJSPSoDT8U9Quh5vU8timD2RM7RS38", 1)
-                .withNetwork("testnet")
+                .withNetworkConfig(testnet)
                 .withVersion(1)
                 .withTimestamp(optionsDefault.timestamp - 21601)
                 .withPassphrase("super cool passphrase")
@@ -250,7 +250,7 @@ describe("Block", () => {
             };
 
             const transactions = TransactionFactory.transfer("ANYiQJSPSoDT8U9Quh5vU8timD2RM7RS38", 1)
-                .withNetwork("testnet")
+                .withNetworkConfig(testnet)
                 .withVersion(1)
                 .withTimestamp(
                     optionsDefault.timestamp +
@@ -279,7 +279,7 @@ describe("Block", () => {
             };
 
             const transactions = TransactionFactory.transfer("ANYiQJSPSoDT8U9Quh5vU8timD2RM7RS38", 1)
-                .withNetwork("testnet")
+                .withNetworkConfig(testnet)
                 .withVersion(1)
                 .withTimestamp(
                     optionsDefault.timestamp +
@@ -309,7 +309,7 @@ describe("Block", () => {
             };
 
             const transactions = TransactionFactory.transfer("ANYiQJSPSoDT8U9Quh5vU8timD2RM7RS38", 1)
-                .withNetwork("mainnet")
+                .withNetworkConfig(mainnet)
                 .withVersion(1)
                 .withTimestamp(
                     optionsDefault.timestamp +
@@ -336,7 +336,7 @@ describe("Block", () => {
             };
 
             const transactions = TransactionFactory.transfer("ANYiQJSPSoDT8U9Quh5vU8timD2RM7RS38", 1)
-                .withNetwork("mainnet")
+                .withNetworkConfig(mainnet)
                 .withVersion(1)
                 .withTimestamp(
                     optionsDefault.timestamp +

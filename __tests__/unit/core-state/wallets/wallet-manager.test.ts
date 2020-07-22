@@ -9,6 +9,7 @@ import { Address } from "@arkecosystem/crypto/src/identities";
 import { Wallet, WalletManager } from "../../../../packages/core-state/src/wallets";
 import { TransactionFactory } from "../../../helpers/transaction-factory";
 import { fixtures } from "../../../utils";
+import { testnet } from "../../../utils/config/testnet/testnet";
 import wallets from "../__fixtures__/wallets.json";
 
 Managers.configManager.setHeight(2); // aip11 (v2 transactions) is true from height 2 on testnet
@@ -199,22 +200,22 @@ describe("Wallet Manager", () => {
         it.todo("when the recipient is a cold wallet");
 
         const transfer = TransactionFactory.transfer(walletData2.address, 96579)
-            .withNetwork("testnet")
+            .withNetworkConfig(testnet)
             .withPassphrase(Math.random().toString(36))
             .build()[0];
 
         const delegateReg = TransactionFactory.delegateRegistration()
-            .withNetwork("testnet")
+            .withNetworkConfig(testnet)
             .withPassphrase(Math.random().toString(36))
             .build()[0];
 
         const secondSign = TransactionFactory.secondSignature()
-            .withNetwork("testnet")
+            .withNetworkConfig(testnet)
             .withPassphrase(Math.random().toString(36))
             .build()[0];
 
         const vote = TransactionFactory.vote(walletData2.publicKey)
-            .withNetwork("testnet")
+            .withNetworkConfig(testnet)
             .withPassphrase(Math.random().toString(36))
             .build()[0];
 
