@@ -139,20 +139,9 @@ describe("API 2.0 - Transactions", () => {
         });
     });
 
-    describe("GET /transactions/unconfirmed", () => {
-        it("should GET all the unconfirmed transactions", async () => {
-            await utils.createTransaction();
-
-            const response = await utils.request("GET", "transactions/unconfirmed");
-            expect(response).toBeSuccessfulResponse();
-            expect(response.data.data).toBeArray();
-            expect(response.data.data).not.toBeEmpty();
-        });
-    });
-
     describe("GET /transactions/unconfirmed/:id", () => {
         it("should GET an unconfirmed transaction by the given identifier", async () => {
-            const transaction = await utils.createTransaction();
+            const transaction = await utils.createTransaction("another tx");
 
             const response = await utils.request("GET", `transactions/unconfirmed/${transaction.id}`);
             expect(response).toBeSuccessfulResponse();
@@ -168,6 +157,17 @@ describe("API 2.0 - Transactions", () => {
                 ),
                 404,
             );
+        });
+    });
+
+    describe("GET /transactions/unconfirmed", () => {
+        it("should GET all the unconfirmed transactions", async () => {
+            await utils.createTransaction();
+
+            const response = await utils.request("GET", "transactions/unconfirmed");
+            expect(response).toBeSuccessfulResponse();
+            expect(response.data.data).toBeArray();
+            expect(response.data.data).not.toBeEmpty();
         });
     });
 

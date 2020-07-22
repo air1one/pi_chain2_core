@@ -4,6 +4,7 @@ import { app } from "@arkecosystem/core-container";
 import { httpie } from "@arkecosystem/core-utils";
 import { Managers } from "@arkecosystem/crypto";
 import { TransactionFactory } from "../../helpers";
+import { testnet } from "../../utils/config/testnet/testnet";
 import { ApiHelpers } from "../../utils/helpers/api";
 
 class Helpers {
@@ -148,10 +149,10 @@ class Helpers {
         expect(lock.timestamp.human).toBeString();
     }
 
-    public async createTransaction() {
-        Managers.configManager.setConfig(Managers.NetworkManager.findByName("testnet"));
+    public async createTransaction(vendorFied = "test") {
+        Managers.configManager.setConfig(testnet);
 
-        const transaction = TransactionFactory.transfer("AZFEPTWnn2Sn8wDZgCRF8ohwKkrmk2AZi1", 100000000, "test")
+        const transaction = TransactionFactory.transfer("AZFEPTWnn2Sn8wDZgCRF8ohwKkrmk2AZi1", 100000000, vendorFied)
             .withPassphrase("clay harbor enemy utility margin pretty hub comic piece aerobic umbrella acquire")
             .createOne();
 
